@@ -1,0 +1,46 @@
+$background-default: #1D2023;
+
+.transactions {
+    position: relative;
+    flex: 1;
+    padding-bottom: 40px !important;
+
+    &__header {}
+
+    &__btn {
+        width: 56px;
+        position: relative;
+
+        &-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(50%);
+            background: $background-default;
+            padding: 12px;
+            border-radius: 1000px;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            background: transparent;
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+        }
+
+        &::before {
+            right: calc(100% + 11px);
+            border-top-right-radius: 1000px;
+            box-shadow: 0 -10px 0 0 $background-default;
+        }
+
+        &::after {
+            border-top-left-radius: 1000px;
+            left: calc(100% + 10px);
+            box-shadow: 0 -10px 0 0 $background-default;
+        }
+    }
+}

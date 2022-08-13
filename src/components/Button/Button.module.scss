@@ -1,0 +1,14 @@
+$background: #5D5FEF;
+
+.button {
+    height: 56px;
+    background: $background;
+    border-radius: 1000px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover{
+        background: darken($background, 5);
+    }
+}

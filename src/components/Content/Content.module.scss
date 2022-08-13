@@ -1,0 +1,21 @@
+$background-default: #1D2023;
+$background-primary: #17181C;
+
+.content {
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+
+    &.default {
+        padding: 24px 16px;
+        background: $background-default;
+    }
+
+    &.primary {
+        background: $background-primary;
+    }
+
+    &__header{
+        margin-bottom: 16px;
+    }
+}

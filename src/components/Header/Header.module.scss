@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    &__right {
+        text-align: right;
+    }
+
+    &__amount {
+        display: block;
+    }
+}

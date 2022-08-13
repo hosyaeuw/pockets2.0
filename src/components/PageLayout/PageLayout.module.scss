@@ -1,0 +1,15 @@
+.page-layout {
+    width: 1154px;
+
+    &-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__header {
+        margin-bottom: 40px;
+    }
+}

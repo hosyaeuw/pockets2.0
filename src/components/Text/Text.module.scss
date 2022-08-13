@@ -1,0 +1,30 @@
+$default: #FFFFFF;
+$primary: #ffffff80;
+
+.color__ {
+    &default {
+        color: $default;
+    }
+
+    &primary {
+        color: $primary;
+    }
+}
+
+.size__ {
+    &s {
+        font-size: 12px;
+    }
+
+    &m {
+        font-size: 14px;
+    }
+
+    &l {
+        font-size: 18px;
+    }
+
+    &xl {
+        font-size: 32px;
+    }
+}

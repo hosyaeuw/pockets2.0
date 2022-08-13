@@ -1,0 +1,12 @@
+.global {
+    height: 404px;
+    width: 333px;
+
+    &__header {}
+
+    &__plate {
+        &:not(:last-child) {
+            margin-bottom: 8px;
+        }
+    }
+}
