@@ -1,0 +1,38 @@
+$background: #17181C;
+$border: rgba(255, 255, 255, 0.15);
+
+.select {
+    background: $background;
+    border: 1px solid $border;
+    height: 44px;
+    width: 100%;
+    border-radius: 100px;
+    padding: 8px 16px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    color-scheme: dark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+
+    &__options {
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 0;
+        max-height: 208px;
+        width: 280px;
+        border-radius: 16px 0px 16px 16px;
+        background: #191A23 100%;
+        text-align: left;
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+        padding: 8px 0;
+    }
+
+    &::placeholder {
+        color: #ffffff80;
+    }
+}

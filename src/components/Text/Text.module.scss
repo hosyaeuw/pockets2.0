@@ -1,9 +1,20 @@
 $default: #FFFFFF;
-$primary: #ffffff80;
+$secondary: #ffffff80;
+$primary: #5D5FEF;
+
+.one-line {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .color__ {
     &default {
         color: $default;
+    }
+
+    &secondary {
+        color: $secondary;
     }
 
     &primary {
@@ -26,5 +37,19 @@ $primary: #ffffff80;
 
     &xl {
         font-size: 32px;
+    }
+}
+
+.align__ {
+    &left {
+        text-align: left;
+    }
+
+    &right {
+        text-align: right;
+    }
+
+    &center {
+        text-align: center;
     }
 }

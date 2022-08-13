@@ -8,7 +8,7 @@ const Wrapper: React.FC = () => {
     if (items.length === 0) {
         return (
             <div className={styles.table__empty}>
-                <Text size="l" color="primary">У вас нет ни одной операции</Text>
+                <Text size="l" color="secondary">У вас нет ни одной операции</Text>
             </div>
         );
     }

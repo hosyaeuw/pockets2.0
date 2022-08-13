@@ -1,14 +1,40 @@
-$background: #5D5FEF;
+$background-default: #5D5FEF;
+
+$background-secondary: #17181C;;
 
 .button {
-    height: 56px;
-    background: $background;
     border-radius: 1000px;
     border: none;
     width: 100%;
     cursor: pointer;
 
-    &:hover{
-        background: darken($background, 5);
+
+}
+
+.size__ {
+    &s {
+        height: 40px;
+    }
+
+    &m {
+        height: 56px;
+    }
+}
+
+.variant__ {
+    &default {
+        background: $background-default;
+
+        &:hover {
+            background: darken($background-default, 5);
+        }
+    }
+
+    &secondary{
+        background: $background-secondary;
+
+        &:hover {
+            background: lighten($background-secondary, 5);
+        }
     }
 }

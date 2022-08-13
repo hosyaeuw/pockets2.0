@@ -11,7 +11,7 @@ type Props = {
 const Plate: React.FC<Props> = ({ title, rightComponent, className }) => {
     return (
         <div className={classNames(styles.plate, className)}>
-            <Text color="primary">{title}</Text>
+            <Text color="secondary">{title}</Text>
             {rightComponent}
         </div>
     );

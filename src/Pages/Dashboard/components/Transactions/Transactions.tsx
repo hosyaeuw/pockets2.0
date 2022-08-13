@@ -1,9 +1,14 @@
+import * as React from "react";
 import { Button, Content, Text } from "../../../../components";
-import { Table } from "./components";
+import { Modal, Table } from "./components";
 
 import styles from "./Transactions.module.scss";
 
 const Transactions = () => {
+    const [showModal, setShowModal] = React.useState(false);
+
+    const toggleShowHandler = React.useCallback(() => setShowModal(prev => !prev), [])
+
     return (
         <Content
             className={styles.transactions}
@@ -15,10 +20,11 @@ const Transactions = () => {
                 </div>
             }
         >
+            <Modal show={showModal} onClose={toggleShowHandler} />
             <Table />
             <div className={styles["transactions__btn-container"]}>
                 <div className={styles.transactions__btn}>
-                    <Button>
+                    <Button onClick={toggleShowHandler}>
                         <Text size="xl">+</Text>
                     </Button>
                 </div>

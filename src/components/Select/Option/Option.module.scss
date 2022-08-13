@@ -1,0 +1,29 @@
+$color: #22242C;
+$select-color: #5D5FEF;
+
+.option {
+    position: relative;
+    height: 37px;
+    padding-left: 40px;
+    padding-right: 16px;
+    border-bottom: 1px solid $color;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background: $color;
+    }
+
+    &::after {
+        content: '\2714';
+        position: absolute;
+        left: 16px;
+    }
+
+    &_selected {
+        &::after {
+            color: $select-color;
+        }
+    }
+}

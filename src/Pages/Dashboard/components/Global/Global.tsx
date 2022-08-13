@@ -12,7 +12,7 @@ const Global = () => {
                         <b>Апрель</b>
                     </Text>
                     &nbsp;&nbsp;
-                    <Text size="l" color="primary">
+                    <Text size="l" color="secondary">
                         2022
                     </Text>
                 </div>

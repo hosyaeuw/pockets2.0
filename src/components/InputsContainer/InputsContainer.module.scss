@@ -1,0 +1,18 @@
+.inputs-container {
+    width: 100%;
+    display: flex;
+
+    :first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    :nth-child(n):not(:first-child):not(:last-child) {
+        border-radius: 0;
+    }
+
+    :last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

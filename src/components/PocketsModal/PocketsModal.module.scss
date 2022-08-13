@@ -1,0 +1,27 @@
+$size: 100px;
+
+.modal {
+    position: relative;
+    min-height: $size;
+    min-width: $size;
+    padding: 48px 44px !important;
+    display: flex;
+    flex-direction: column;
+
+    &__content {
+        flex: 1;
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__close-btn {
+        position: absolute;
+        right: 25px;
+        top: 22px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        user-select: none;
+    }
+}
