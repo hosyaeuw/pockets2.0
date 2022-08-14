@@ -78,6 +78,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         onChange={(value) => {
                             setTab(value as TransactionType);
                         }}
+                        defaultValue={tab}
                     />
                 </div>
                 <InputsContainer>
