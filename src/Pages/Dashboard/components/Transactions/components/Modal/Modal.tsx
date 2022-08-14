@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 
 import {
     Button,
@@ -10,6 +10,10 @@ import {
     Select,
     InputsContainer,
 } from "../../../../../../components";
+import useCategories, { Category } from "../../../../../../hooks/useCategories";
+import useTransactions, {
+    TransactionType,
+} from "../../../../../../hooks/useTransactions";
 
 import styles from "./Modal.module.scss";
 
@@ -18,33 +22,43 @@ type Props = {
     onClose: () => void;
 };
 
-enum TabsCategories {
-    income = "income",
-    expense = "expense",
-}
+type TTab = {
+    title: string;
+    value: TransactionType;
+};
 
-const tabs = [
+const tabs: TTab[] = [
     {
         title: "Доход +",
-        value: TabsCategories.income,
+        value: "income",
     },
     {
         title: "Расход -",
-        value: TabsCategories.expense,
+        value: "expense",
     },
 ];
 
-const options = Array(8)
-    .fill(0)
-    .map((_, index) => index);
+type TFormData = {
+    date: string;
+    amount: number;
+    category?: Category;
+};
 
 const Modal: React.FC<Props> = ({ show, onClose }) => {
-    const { handleSubmit, control } = useForm();
-    const [tab, setTab] = React.useState(TabsCategories.income);
+    const { addTransaction } = useTransactions();
+
+    const { handleSubmit, control } = useForm<TFormData>();
+    const [tab, setTab] = React.useState<TransactionType>("income");
 
     const onSubmitHandler = React.useCallback(
-        (data: any) => console.log(data),
-        []
+        (data: TFormData) =>
+            addTransaction({
+                ...data,
+                category: data.category,
+                amount: +data.amount,
+                type: tab,
+            }),
+        [addTransaction, tab]
     );
 
     return (
@@ -62,7 +76,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                     <Tabs
                         options={tabs}
                         onChange={(value) => {
-                            setTab(value as TabsCategories);
+                            setTab(value as TransactionType);
                         }}
                     />
                 </div>
@@ -77,7 +91,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                             <Input type="date" {...field} placeholder="Дата" />
                         )}
                     />
-                    {tab === TabsCategories.expense && (
+                    {tab === "expense" && (
                         <Controller
                             control={control}
                             name="category"
@@ -85,13 +99,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                                 required: "Обязательное поле",
                             }}
                             render={({ field }) => (
-                                <Select {...field}>
-                                    {options.map((value) => (
-                                        <Select.Option value={value}>
-                                            <Text>{value}</Text>
-                                        </Select.Option>
-                                    ))}
-                                </Select>
+                                <CategoriesSelect field={field} />
                             )}
                         />
                     )}
@@ -102,7 +110,11 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                             required: "Обязательное поле",
                         }}
                         render={({ field }) => (
-                            <Input placeholder="Сумма" {...field} />
+                            <Input
+                                type="number"
+                                placeholder="Сумма"
+                                {...field}
+                            />
                         )}
                     />
                 </InputsContainer>
@@ -117,3 +129,28 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
 };
 
 export default Modal;
+// TODO: вынести
+const CategoriesSelect: React.FC<{
+    field: ControllerRenderProps<TFormData, "category">;
+}> = ({ field }) => {
+    const { items: categories } = useCategories();
+    const [value, setValue] = React.useState<Category | null>();
+
+    const onChangeHandler = React.useCallback(
+        (value: Category) => {
+            setValue(value);
+            field.onChange(value);
+        },
+        [field]
+    );
+
+    return (
+        <Select {...field} value={value?.name} onChange={onChangeHandler}>
+            {categories.map((category) => (
+                <Select.Option value={category}>
+                    <Text>{category.name}</Text>
+                </Select.Option>
+            ))}
+        </Select>
+    );
+};

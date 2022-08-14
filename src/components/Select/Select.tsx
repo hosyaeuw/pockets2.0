@@ -8,6 +8,7 @@ type Props = {
     children?: React.ReactNode;
     placeholder?: string;
     onChange?: (value: any) => void;
+    value?: string | null;
 };
 
 type SelectComponent = React.FC<Props> & {
@@ -18,9 +19,9 @@ const Select: SelectComponent = ({
     children,
     placeholder = "Выберите опцию",
     onChange,
+    value = null,
 }) => {
     const selectRef = React.useRef<HTMLDivElement | null>(null);
-    const [value, setValue] = React.useState<any | null>(null);
     const [showOptions, setShowOptions] = React.useState(false);
 
     const openOptions = React.useCallback(() => setShowOptions(true), []);
@@ -28,8 +29,7 @@ const Select: SelectComponent = ({
 
     const onClickHandler = React.useCallback(
         (value: any) => {
-            onChange && onChange(value)
-            setValue(value);
+            onChange && onChange(value);
             closeOptions();
         },
         [closeOptions, onChange]
@@ -71,12 +71,13 @@ const Select: SelectComponent = ({
 
     return (
         <div className={styles.select} onClick={openOptions} ref={selectRef}>
-            {value === null && (
+            {value === null ? (
                 <Text oneLine color="secondary">
                     {placeholder}
                 </Text>
+            ) : (
+                <Text oneLine>{value}</Text>
             )}
-            {value !== null && <Text oneLine>{value}</Text>}
             {showOptions && (
                 <div className={styles.select__options}>{renderChildren()}</div>
             )}

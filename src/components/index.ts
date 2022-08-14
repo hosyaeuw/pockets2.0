@@ -9,3 +9,4 @@ export { default as Input } from "./Input";
 export { default as Tabs } from "./Tabs";
 export { default as Select } from "./Select";
 export { default as InputsContainer } from "./InputsContainer";
+export { default as ArrowLink } from "./ArrowLink";

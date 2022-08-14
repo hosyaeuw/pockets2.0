@@ -1,0 +1,20 @@
+$row-height: 40px;
+
+.tbody {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+
+    .row {
+        height: $row-height;
+        display: flex;
+        width: 100%;
+        border-bottom: 2px solid #1D2023;
+    }
+
+    .cell {
+        flex-basis: 50%;
+        text-align: center;
+        line-height: $row-height;
+    }
+}

@@ -1,0 +1,13 @@
+.categories {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: hidden;
+
+    width: 308px;
+
+    &__title {
+        margin-bottom: 16px;
+        margin-left: 16px;
+    }
+}

@@ -2,6 +2,12 @@
     display: flex;
     justify-content: space-between;
 
+    &__left {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+    }
+
     &__right {
         text-align: right;
     }

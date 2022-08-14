@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Content, Text } from "../../../../components";
+import { ArrowLink, Button, Content, Text } from "../../../../components";
 import { Modal, Table } from "./components";
 
 import styles from "./Transactions.module.scss";
@@ -7,7 +7,10 @@ import styles from "./Transactions.module.scss";
 const Transactions = () => {
     const [showModal, setShowModal] = React.useState(false);
 
-    const toggleShowHandler = React.useCallback(() => setShowModal(prev => !prev), [])
+    const toggleShowHandler = React.useCallback(
+        () => setShowModal((prev) => !prev),
+        []
+    );
 
     return (
         <Content
@@ -17,6 +20,7 @@ const Transactions = () => {
                     <Text size="l">
                         <b>Операции</b>
                     </Text>
+                    <ArrowLink to="transactions" next />
                 </div>
             }
         >

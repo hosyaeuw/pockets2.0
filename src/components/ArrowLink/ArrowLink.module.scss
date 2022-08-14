@@ -1,0 +1,22 @@
+$color: #18181b;
+$second-color: #191A23;
+$size: 32px;
+
+.btn {
+    width: $size;
+    height: $size;
+    background: linear-gradient(117.02deg, $color 0.55%, $second-color 100%);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+
+    &:hover {
+        background: lighten($color, 10);
+    }
+
+    &_next{
+        transform: rotate(180deg);
+    }
+}

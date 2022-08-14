@@ -1,0 +1,21 @@
+$row-height: 40px;
+
+.header {
+    height: $row-height;
+    display: flex;
+    width: 100%;
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+
+    .row {
+        width: 100%;
+        display: flex;
+        border-bottom: 2px solid #1D2023;
+    }
+
+    .cell {
+        flex-basis: 50%;
+        line-height: $row-height;
+        text-align: center;
+    }
+}

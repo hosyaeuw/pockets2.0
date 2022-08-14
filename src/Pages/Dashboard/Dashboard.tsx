@@ -5,7 +5,13 @@ import styles from "./Dashboard.module.scss";
 
 const Dashboard = () => {
     return (
-        <PageLayout>
+        <PageLayout
+            title={
+                <>
+                    Привет, <b>Иннокентий</b>
+                </>
+            }
+        >
             <div className={styles.dashboard}>
                 <Global />
                 <Transactions />

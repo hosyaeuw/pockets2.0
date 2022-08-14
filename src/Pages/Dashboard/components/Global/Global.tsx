@@ -1,8 +1,13 @@
 import { Content, Plate, Text } from "../../../../components";
+import useTransactions from "../../../../hooks/useTransactions";
 
 import styles from "./Global.module.scss";
 
 const Global = () => {
+    const { items, global } = useTransactions();
+    console.log(items);
+    console.log(global);
+
     return (
         <Content
             className={styles.global}
@@ -23,7 +28,7 @@ const Global = () => {
                 title="Доход"
                 rightComponent={
                     <Text size="l">
-                        <b>0</b>
+                        <b>{global.income}</b>
                     </Text>
                 }
             />
@@ -32,7 +37,7 @@ const Global = () => {
                 title="Расход"
                 rightComponent={
                     <Text size="l">
-                        <b>0</b>
+                        <b>{global.expense}</b>
                     </Text>
                 }
             />

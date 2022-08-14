@@ -1,14 +1,12 @@
 $background-default: #5D5FEF;
 
-$background-secondary: #17181C;;
+$background-secondary: #17181C;
 
 .button {
     border-radius: 1000px;
     border: none;
-    width: 100%;
     cursor: pointer;
-
-
+    width: 100%;
 }
 
 .size__ {
@@ -22,6 +20,7 @@ $background-secondary: #17181C;;
 }
 
 .variant__ {
+
     &default {
         background: $background-default;
 
@@ -30,11 +29,18 @@ $background-secondary: #17181C;;
         }
     }
 
-    &secondary{
+    &secondary {
         background: $background-secondary;
 
         &:hover {
             background: lighten($background-secondary, 5);
         }
+    }
+
+    &ghost {
+        display: inline-block;
+        background: none;
+        width: unset;
+        height: unset;
     }
 }
