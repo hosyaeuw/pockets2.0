@@ -1,13 +1,9 @@
-import { Content, Plate, Text } from "../../../../components";
-import useTransactions from "../../../../hooks/useTransactions";
+import { Content, Text } from "../../../../components";
+import { GlobalPlates } from "../../../common/components";
 
 import styles from "./Global.module.scss";
 
 const Global = () => {
-    const { items, global } = useTransactions();
-    console.log(items);
-    console.log(global);
-
     return (
         <Content
             className={styles.global}
@@ -23,24 +19,7 @@ const Global = () => {
                 </div>
             }
         >
-            <Plate
-                className={styles.global__plate}
-                title="Доход"
-                rightComponent={
-                    <Text size="l">
-                        <b>{global.income}</b>
-                    </Text>
-                }
-            />
-            <Plate
-                className={styles.global__plate}
-                title="Расход"
-                rightComponent={
-                    <Text size="l">
-                        <b>{global.expense}</b>
-                    </Text>
-                }
-            />
+            <GlobalPlates />
         </Content>
     );
 };

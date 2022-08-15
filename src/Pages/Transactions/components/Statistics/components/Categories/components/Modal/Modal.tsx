@@ -6,7 +6,7 @@ import {
     PocketsModal,
     Text,
 } from "../../../../../../../../components";
-import useCategories from "../../../../../../../../hooks/useCategories";
+import useCategories from "../../../../../../../common/hooks/useCategories";
 
 import styles from "./Modal.module.scss";
 
@@ -21,14 +21,15 @@ type TFormData = {
 
 const Modal: React.FC<Props> = ({ show, onClose }) => {
     const { addCategory } = useCategories();
-    const { handleSubmit, control } = useForm<TFormData>();
+    const { handleSubmit, control, reset } = useForm<TFormData>();
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
             addCategory(data.category_name);
+            reset();
             onClose();
         },
-        [addCategory, onClose]
+        [addCategory, onClose, reset]
     );
 
     return (

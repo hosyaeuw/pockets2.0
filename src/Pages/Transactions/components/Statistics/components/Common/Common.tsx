@@ -1,7 +1,9 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { Plate, Text } from "../../../../../../components";
+import { Text } from "../../../../../../components";
+import { GlobalPlates } from "../../../../../common/components";
+import useCategories from "../../../../../common/hooks/useCategories";
 
 import styles from "./Common.module.scss";
 
@@ -13,33 +15,6 @@ type GraphItem = {
     label: string;
     value: number;
 };
-
-const items = [
-    {
-        label: "Инвестиции",
-        value: 3000,
-    },
-    {
-        label: "Развлечения",
-        value: 3000,
-    },
-    {
-        label: "Продукты",
-        value: 7000,
-    },
-    {
-        label: "Хлеб",
-        value: 1000,
-    },
-    {
-        label: "Консервы",
-        value: 1000,
-    },
-    {
-        label: "Вода",
-        value: 1000,
-    },
-];
 
 const Graph: React.FC<{ items: GraphItem[] }> = ({ items }) => {
     const sortedItems = items.sort((a, b) => b.value - a.value);
@@ -82,8 +57,17 @@ const Graph: React.FC<{ items: GraphItem[] }> = ({ items }) => {
         />
     );
 };
-
+// TODO: разделить плашки, график и т.д.
 const Common = () => {
+    const { items: categoryItems } = useCategories();
+
+    const items = React.useMemo(() => {
+        return categoryItems.map((category) => ({
+            label: category.name,
+            value: category.amount,
+        }));
+    }, [categoryItems]);
+
     return (
         <div className={styles.common}>
             <div>
@@ -92,24 +76,7 @@ const Common = () => {
                         Расходы по категориям
                     </Text>
                 </div>
-                <div className={styles.common__plates}>
-                    <Plate
-                        title="Доходы"
-                        rightComponent={
-                            <Text size="l">
-                                <b>0</b>
-                            </Text>
-                        }
-                    />
-                    <Plate
-                        title="Расходы"
-                        rightComponent={
-                            <Text size="l">
-                                <b>0</b>
-                            </Text>
-                        }
-                    />
-                </div>
+                <GlobalPlates />
             </div>
             <div className={styles.common__graph}>
                 <Graph items={items} />

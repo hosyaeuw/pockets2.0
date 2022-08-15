@@ -10,10 +10,8 @@ import {
     Select,
     InputsContainer,
 } from "../../../../../../components";
-import useCategories, { Category } from "../../../../../../hooks/useCategories";
-import useTransactions, {
-    TransactionType,
-} from "../../../../../../hooks/useTransactions";
+import useCategories, { TCategory } from "../../../../../common/hooks/useCategories";
+import useTransactions, { TransactionType } from "../../../../../common/hooks/useTransactions";
 
 import styles from "./Modal.module.scss";
 
@@ -41,7 +39,7 @@ const tabs: TTab[] = [
 type TFormData = {
     date: string;
     amount: number;
-    category?: Category;
+    category?: TCategory;
 };
 
 const Modal: React.FC<Props> = ({ show, onClose }) => {
@@ -135,10 +133,10 @@ const CategoriesSelect: React.FC<{
     field: ControllerRenderProps<TFormData, "category">;
 }> = ({ field }) => {
     const { items: categories } = useCategories();
-    const [value, setValue] = React.useState<Category | null>();
+    const [value, setValue] = React.useState<TCategory | null>();
 
     const onChangeHandler = React.useCallback(
-        (value: Category) => {
+        (value: TCategory) => {
             setValue(value);
             field.onChange(value);
         },

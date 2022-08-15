@@ -2,13 +2,13 @@ import React from "react";
 import { useTable } from "react-table";
 
 import { Button, Content, Text } from "../../../../../../../../components";
-import useCategories from "../../../../../../../../hooks/useCategories";
 import Modal from "../Modal";
 import { TableBody, TableHeader } from "./components";
 
 import { columns, tableData } from "./utils";
 
 import styles from "./Table.module.scss";
+import useCategories from "../../../../../../../common/hooks/useCategories";
 
 type Props = {
     openModal: () => void;

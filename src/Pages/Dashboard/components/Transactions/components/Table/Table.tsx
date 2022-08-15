@@ -4,8 +4,8 @@ import { Content, Text } from "../../../../../../components";
 import { columns, tableData } from "./utils";
 
 import styles from "./Table.module.scss";
-import useTransactions from "../../../../../../hooks/useTransactions";
 import { TableBody, TableHeader } from "./components";
+import useTransactions from "../../../../../common/hooks/useTransactions";
 // TODO: убрать дубликат с целями
 const Wrapper: React.FC = () => {
     const { items } = useTransactions();
