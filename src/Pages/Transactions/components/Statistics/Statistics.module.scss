@@ -1,4 +1,17 @@
 .statistics {
     height: 404px;
     width: 663px;
+
+    &__content {
+        flex: 1;
+        display: flex;
+    }
+
+    &__common {
+        padding-right: 21px;
+        margin-right: 21px;
+        border-right: 4px solid #17181C;
+        display: flex;
+        flex-direction: column;
+    }
 }

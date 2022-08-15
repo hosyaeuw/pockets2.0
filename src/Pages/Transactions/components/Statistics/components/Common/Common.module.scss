@@ -1,0 +1,27 @@
+.common {
+    width: 277px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+
+    &__title {
+        margin-bottom: 16px;
+        margin-left: 16px;
+    }
+
+    &__plates {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__graph {
+        height: 118px;
+        margin-bottom: 20px;
+    }
+}
+
+.graph {
+    transform: translateY(-28%);
+}
