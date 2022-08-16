@@ -10,13 +10,18 @@ import {
     Select,
     InputsContainer,
 } from "../../../../../../components";
-import useCategories, { TCategory } from "../../../../../common/hooks/useCategories";
-import useTransactions, { TransactionType } from "../../../../../common/hooks/useTransactions";
+import useCategories, {
+    TCategory,
+} from "../../../../../common/hooks/useCategories";
+import useTransactions, {
+    TransactionType,
+} from "../../../../../common/hooks/useTransactions";
 
 import styles from "./Modal.module.scss";
 
 type Props = {
     show: boolean;
+    startTab?: TransactionType;
     onClose: () => void;
 };
 
@@ -42,21 +47,24 @@ type TFormData = {
     category?: TCategory;
 };
 
-const Modal: React.FC<Props> = ({ show, onClose }) => {
+const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
     const { addTransaction } = useTransactions();
 
-    const { handleSubmit, control } = useForm<TFormData>();
-    const [tab, setTab] = React.useState<TransactionType>("income");
+    const { handleSubmit, control, reset } = useForm<TFormData>();
+    const [tab, setTab] = React.useState<TransactionType>(startTab);
 
     const onSubmitHandler = React.useCallback(
-        (data: TFormData) =>
+        (data: TFormData) => {
             addTransaction({
                 ...data,
                 category: data.category,
                 amount: +data.amount,
                 type: tab,
-            }),
-        [addTransaction, tab]
+            });
+            reset();
+            onClose();
+        },
+        [addTransaction, tab, reset, onClose]
     );
 
     return (

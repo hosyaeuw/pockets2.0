@@ -1,5 +1,5 @@
-import * as React from "react";
 import { ArrowLink, Button, Content, Text } from "../../../../components";
+import useModal from "../../hooks/useModal";
 import { Modal, Table } from "./components";
 
 import styles from "./Transactions.module.scss";
@@ -9,12 +9,7 @@ const transactionsUrl = "transactions";
 const Transactions = () => {
     const isTransactionsUrl = window.location.href.endsWith(transactionsUrl);
 
-    const [showModal, setShowModal] = React.useState(false);
-
-    const toggleShowHandler = React.useCallback(
-        () => setShowModal((prev) => !prev),
-        []
-    );
+    const {showModal, toggleShowModalHandler} = useModal();
 
     return (
         <Content
@@ -58,11 +53,11 @@ const Transactions = () => {
                 </div>
             }
         >
-            <Modal show={showModal} onClose={toggleShowHandler} />
+            <Modal show={showModal} onClose={toggleShowModalHandler} />
             <Table />
             <div className={styles["transactions__btn-container"]}>
                 <div className={styles.transactions__btn}>
-                    <Button onClick={toggleShowHandler}>
+                    <Button onClick={toggleShowModalHandler}>
                         <Text size="xl">+</Text>
                     </Button>
                 </div>

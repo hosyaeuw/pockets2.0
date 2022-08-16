@@ -70,7 +70,9 @@ const Common = () => {
 
     return (
         <div className={styles.common}>
-            <div>
+            <div style={{
+                zIndex: 9999,
+            }}>
                 <div className={styles.common__title}>
                     <Text size="s" color="secondary">
                         Расходы по категориям

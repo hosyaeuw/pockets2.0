@@ -9,6 +9,7 @@ import { columns, tableData } from "./utils";
 
 import styles from "./Table.module.scss";
 import useCategories from "../../../../../../../common/hooks/useCategories";
+import useModal from "../../../../../../../common/hooks/useModal";
 
 type Props = {
     openModal: () => void;
@@ -71,17 +72,12 @@ const Wrapper: React.FC<Props> = ({ openModal }) => {
 };
 // TODO: вынести это враимодействие с модалками в хук
 const Table = () => {
-    const [showModal, setShowModal] = React.useState(false);
-
-    const toggleShowHandler = React.useCallback(
-        () => setShowModal((prev) => !prev),
-        []
-    );
+    const { showModal, toggleShowModalHandler } = useModal();
 
     return (
         <Content variant="primary" className={styles["table-container"]}>
-            <Modal onClose={toggleShowHandler} show={showModal} />
-            <Wrapper openModal={toggleShowHandler} />
+            <Modal onClose={toggleShowModalHandler} show={showModal} />
+            <Wrapper openModal={toggleShowModalHandler} />
         </Content>
     );
 };

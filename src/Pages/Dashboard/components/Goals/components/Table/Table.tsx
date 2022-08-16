@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Button, Content, Text } from "../../../../../../components";
+import useModal from "../../../../../common/hooks/useModal";
 import Modal from "../Modal";
 
 import styles from "./Table.module.scss";
@@ -30,17 +31,12 @@ const Wrapper: React.FC<Props> = ({ openModal }) => {
 };
 
 const Table = () => {
-    const [showModal, setShowModal] = React.useState(false);
-
-    const toggleShowHandler = React.useCallback(
-        () => setShowModal((prev) => !prev),
-        []
-    );
+    const { showModal, toggleShowModalHandler } = useModal();
 
     return (
         <Content variant="primary" className={styles["table-container"]}>
-            <Modal show={showModal} onClose={toggleShowHandler} />
-            <Wrapper openModal={toggleShowHandler} />
+            <Modal show={showModal} onClose={toggleShowModalHandler} />
+            <Wrapper openModal={toggleShowModalHandler} />
         </Content>
     );
 };
