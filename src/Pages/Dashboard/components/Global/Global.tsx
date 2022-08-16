@@ -30,7 +30,7 @@ const MoreExtends = () => {
             <Text size="s" color="secondary">
                 Больше всего расходов
             </Text>
-            <Text size="s" oneLine>{moreExtendsCategory.name}</Text>
+            <Text size="s" oneLine>{moreExtendsCategory?.name ?? "-"}</Text>
         </div>
     );
 };

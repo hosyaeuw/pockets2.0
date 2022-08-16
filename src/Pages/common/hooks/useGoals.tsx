@@ -1,7 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useTypesSelector } from "../../../hooks/useTypesSelector";
+import { addGoalsAction } from "../../../redux/slices/goals";
 import { TCategory } from "./useCategories";
 
-type TGoal = {
+export type TGoal = {
     id: number;
     name: string;
     amount: number;
@@ -18,6 +21,9 @@ type TGoal = {
 };
 
 const useGoals = () => {
+    const dispatch = useDispatch();
+    const [items] = useTypesSelector(({ goals }) => [goals.items]);
+
     const addGoal = React.useCallback(
         (data: {
             name: string;
@@ -27,9 +33,25 @@ const useGoals = () => {
             percent: number;
             category: TCategory;
         }) => {
-            console.log(data);
+            const currDate = new Date();
+            const endGoal = new Date(currDate).setMonth(
+                currDate.getMonth() + +data.deposit_term
+            );
+            const secondsToEnd = endGoal - currDate.getTime();
+            dispatch(
+                addGoalsAction({
+                    id: (items[items.length - 1]?.id ?? 0) + 1,
+                    ...data,
+                    total_amount: 0,
+                    prev_month_amount: 0,
+                    days_to_end: secondsToEnd / (1000 * 3600 * 24),
+                    is_closed: false,
+                    created_at: currDate.toLocaleDateString(),
+                    closed_at: null,
+                })
+            );
         },
-        []
+        [items, dispatch]
     );
 
     return { addGoal };
