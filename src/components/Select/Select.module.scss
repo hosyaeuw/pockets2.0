@@ -17,6 +17,7 @@ $border: rgba(255, 255, 255, 0.15);
     align-items: center;
     position: relative;
     cursor: pointer;
+    user-select: none;
 
     &__options {
         position: absolute;

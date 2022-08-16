@@ -70,7 +70,7 @@ const Select: SelectComponent = ({
     }, []);
 
     return (
-        <div className={styles.select} onClick={openOptions} ref={selectRef}>
+        <div className={styles.select} onClick={!showOptions ? openOptions : closeOptions} ref={selectRef}>
             {value === null ? (
                 <Text oneLine color="secondary">
                     {placeholder}

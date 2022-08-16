@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import {
     Button,
     Input,
@@ -7,6 +7,10 @@ import {
     Select,
     Text,
 } from "../../../../../../components";
+import useCategories, {
+    TCategory,
+} from "../../../../../common/hooks/useCategories";
+import useGoals from "../../../../../common/hooks/useGoals";
 
 import styles from "./Modal.module.scss";
 
@@ -15,16 +19,26 @@ type Props = {
     onClose: () => void;
 };
 
-const options = Array(8)
-    .fill(0)
-    .map((_, index) => index);
+type TFormData = {
+    name: string;
+    amount: number;
+    initial_deposit: number;
+    deposit_term: number;
+    percent: number;
+    category: TCategory;
+};
 
 const Modal: React.FC<Props> = ({ show, onClose }) => {
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, control, reset } = useForm<TFormData>();
+    const { addGoal } = useGoals();
 
     const onSubmitHandler = React.useCallback(
-        (data: any) => console.log(data),
-        []
+        (data: TFormData) => {
+            addGoal(data);
+            reset();
+            onClose();
+        },
+        [addGoal, reset, onClose]
     );
 
     return (
@@ -45,7 +59,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
             >
                 <Controller
                     control={control}
-                    name="goals_name"
+                    name="name"
                     rules={{
                         required: "Обязательное поле",
                     }}
@@ -57,13 +71,17 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                     <Text>Сколько вы планируете накопить</Text>
                     <Controller
                         control={control}
-                        name="all_amount"
+                        name="amount"
                         rules={{
                             required: "Обязательное поле",
                         }}
                         render={({ field }) => (
                             <div className={styles.field_amount}>
-                                <Input {...field} placeholder="0" />
+                                <Input
+                                    type="number"
+                                    {...field}
+                                    placeholder="0"
+                                />
                             </div>
                         )}
                     />
@@ -72,13 +90,17 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                     <Text>С какой суммы планируете начать?</Text>
                     <Controller
                         control={control}
-                        name="start_amount"
+                        name="initial_deposit"
                         rules={{
                             required: "Обязательное поле",
                         }}
                         render={({ field }) => (
                             <div className={styles.field_amount}>
-                                <Input {...field} placeholder="0" />
+                                <Input
+                                    type="number"
+                                    {...field}
+                                    placeholder="0"
+                                />
                             </div>
                         )}
                     />
@@ -93,13 +115,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         }}
                         render={({ field }) => (
                             <div className={styles.field_select}>
-                                <Select {...field}>
-                                    {options.map((value) => (
-                                        <Select.Option value={value}>
-                                            <Text>{value}</Text>
-                                        </Select.Option>
-                                    ))}
-                                </Select>
+                                <CategoriesSelect field={field} />
                             </div>
                         )}
                     />
@@ -108,13 +124,17 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                     <Text>Срок (месяцы)</Text>
                     <Controller
                         control={control}
-                        name="deadline"
+                        name="deposit_term"
                         rules={{
                             required: "Обязательное поле",
                         }}
                         render={({ field }) => (
                             <div className={styles.field_number}>
-                                <Input {...field} placeholder="1" />
+                                <Input
+                                    type="number"
+                                    {...field}
+                                    placeholder="1"
+                                />
                             </div>
                         )}
                     />
@@ -145,3 +165,29 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
 };
 
 export default Modal;
+
+// TODO: вынести и соединить с модалки транзаций
+const CategoriesSelect: React.FC<{
+    field: ControllerRenderProps<TFormData, "category">;
+}> = ({ field }) => {
+    const { items: categories } = useCategories();
+    const [value, setValue] = React.useState<TCategory | null>();
+
+    const onChangeHandler = React.useCallback(
+        (value: TCategory) => {
+            setValue(value);
+            field.onChange(value);
+        },
+        [field]
+    );
+
+    return (
+        <Select {...field} value={value?.name} onChange={onChangeHandler}>
+            {categories.map((category) => (
+                <Select.Option value={category}>
+                    <Text>{category.name}</Text>
+                </Select.Option>
+            ))}
+        </Select>
+    );
+};
