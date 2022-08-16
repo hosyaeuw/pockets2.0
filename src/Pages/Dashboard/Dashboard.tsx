@@ -1,5 +1,6 @@
 import PageLayout from "../../components/PageLayout";
-import { Global, Transactions, Goals } from "./components";
+import { Transactions } from "../common/components";
+import { Global, Goals } from "./components";
 
 import styles from "./Dashboard.module.scss";
 

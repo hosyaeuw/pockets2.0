@@ -1,5 +1,5 @@
 import { Text } from "../../../../../../../components";
-import { TTransaction } from "../../../../../../common/hooks/useTransactions";
+import { TTransaction } from "../../../../../hooks/useTransactions";
 
 const tableData = (data: TTransaction[]) => {
     return data.map((item) => ({
