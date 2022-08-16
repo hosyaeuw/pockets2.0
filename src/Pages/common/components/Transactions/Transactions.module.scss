@@ -8,6 +8,7 @@ $background-default: #1D2023;
     &__header {
         display: flex;
         justify-content: space-between;
+        width: 100%;
 
         &-right,
         &-left {

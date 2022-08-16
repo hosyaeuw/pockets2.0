@@ -1,6 +1,12 @@
 .table {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
     &-container {
         flex: 1;
+        max-height: 292px;
+        overflow: hidden;
     }
 
     &__empty {

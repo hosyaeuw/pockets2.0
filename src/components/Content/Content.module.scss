@@ -15,7 +15,10 @@ $background-primary: #17181C;
         background: $background-primary;
     }
 
-    &__header{
+    &__header {
         margin-bottom: 16px;
+        height: 32px;
+        display: flex;
+        align-items: center;
     }
 }

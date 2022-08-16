@@ -1,12 +1,23 @@
 .global {
     height: 404px;
     width: 333px;
+    display: flex;
+    flex-direction: column;
 
     &__header {}
 
-    &__plate {
-        &:not(:last-child) {
-            margin-bottom: 8px;
-        }
+    &__plates {
+        margin-bottom: 24px;
     }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+.global-goals {
+    display: flex;
+    justify-content: space-between;
 }
