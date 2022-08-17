@@ -21,7 +21,7 @@ type Props = {
 
 type TFormData = {
     name: string;
-    amount: number;
+    total_amount: number;
     initial_deposit: number;
     deposit_term: number;
     percent: number;
@@ -71,7 +71,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                     <Text>Сколько вы планируете накопить</Text>
                     <Controller
                         control={control}
-                        name="amount"
+                        name="total_amount"
                         rules={{
                             required: "Обязательное поле",
                         }}

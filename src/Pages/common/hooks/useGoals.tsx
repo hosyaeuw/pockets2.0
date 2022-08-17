@@ -27,7 +27,7 @@ const useGoals = () => {
     const addGoal = React.useCallback(
         (data: {
             name: string;
-            amount: number;
+            total_amount: number;
             initial_deposit: number;
             deposit_term: number;
             percent: number;
@@ -42,7 +42,7 @@ const useGoals = () => {
                 addGoalsAction({
                     id: (items[items.length - 1]?.id ?? 0) + 1,
                     ...data,
-                    total_amount: 0,
+                    amount: data.initial_deposit,
                     prev_month_amount: 0,
                     days_to_end: secondsToEnd / (1000 * 3600 * 24),
                     is_closed: false,
@@ -54,7 +54,7 @@ const useGoals = () => {
         [items, dispatch]
     );
 
-    return { addGoal };
+    return { addGoal, items };
 };
 
 export default useGoals;

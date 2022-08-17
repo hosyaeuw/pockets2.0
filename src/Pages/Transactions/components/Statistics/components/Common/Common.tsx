@@ -6,10 +6,9 @@ import { GlobalPlates } from "../../../../../common/components";
 import useCategories from "../../../../../common/hooks/useCategories";
 
 import styles from "./Common.module.scss";
+import { colors } from "../../../../../../utils/graph";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-const colors = ["#28C76F", "#ED3AC6", "#F9F023", "#5D5FEF"];
 
 type GraphItem = {
     label: string;

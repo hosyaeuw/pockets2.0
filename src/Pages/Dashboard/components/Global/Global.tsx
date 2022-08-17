@@ -2,17 +2,25 @@ import React from "react";
 import { Content, Text } from "../../../../components";
 import { GlobalPlates } from "../../../common/components";
 import useCategories from "../../../common/hooks/useCategories";
+import useGoals from "../../../common/hooks/useGoals";
 
 import styles from "./Global.module.scss";
 
 // TODO: вынести
 const GlobalGoals = () => {
+    const { items } = useGoals();
+
+    const totalSum = React.useMemo(
+        () => items.reduce((acc, curr) => acc + +curr.amount, 0),
+        [items]
+    );
+
     return (
         <div className={styles["global-goals"]}>
             <Text size="s" color="secondary">
                 Отложенно на цели
             </Text>
-            <Text size="s">36000</Text>
+            <Text size="s">{totalSum}</Text>
         </div>
     );
 };
@@ -30,7 +38,9 @@ const MoreExtends = () => {
             <Text size="s" color="secondary">
                 Больше всего расходов
             </Text>
-            <Text size="s" oneLine>{moreExtendsCategory?.name ?? "-"}</Text>
+            <Text size="s" oneLine>
+                {moreExtendsCategory?.name ?? "-"}
+            </Text>
         </div>
     );
 };
