@@ -1,4 +1,5 @@
-import { Content, Text } from "../../../../components";
+import { ArrowLink, Content, Text } from "../../../../components";
+import { paths } from "../../../../router/paths";
 import { Table } from "./components";
 
 import styles from "./Goals.module.scss";
@@ -9,9 +10,12 @@ const Goals = () => {
             className={styles.goals}
             header={
                 <div>
-                    <Text size="l">
-                        <b>Цели</b>
-                    </Text>
+                    <div className={styles.goals__header}>
+                        <Text size="l">
+                            <b>Цели</b>
+                        </Text>
+                        <ArrowLink to={paths.goals} next />
+                    </div>
                 </div>
             }
         >

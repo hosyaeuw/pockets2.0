@@ -1,13 +1,12 @@
 import { ArrowLink, Button, Content, Text } from "../../../../components";
+import { paths } from "../../../../router/paths";
 import useModal from "../../hooks/useModal";
 import { Modal, Table } from "./components";
 
 import styles from "./Transactions.module.scss";
 
-const transactionsUrl = "transactions";
-
 const Transactions = () => {
-    const isTransactionsUrl = window.location.href.endsWith(transactionsUrl);
+    const isTransactionsUrl = window.location.href.endsWith(paths.transactions);
 
     const {showModal, toggleShowModalHandler} = useModal();
 
@@ -21,7 +20,7 @@ const Transactions = () => {
                             <b>Операции</b>
                         </Text>
                         {!isTransactionsUrl && (
-                            <ArrowLink to={transactionsUrl} next />
+                            <ArrowLink to={paths.transactions} next />
                         )}
                     </div>
                     {isTransactionsUrl && (

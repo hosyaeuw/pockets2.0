@@ -1,0 +1,42 @@
+.goals {
+    flex: 1;
+    overflow: hidden;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        height: 32px;
+        margin-bottom: 20px;
+
+        &-btn {
+            height: 32px;
+            width: 153px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            gap: 6px;
+        }
+    }
+
+    &-empty {
+        width: 240px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+
+        &-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        &__img {
+            width: 130px;
+            height: 100px;
+        }
+    }
+}

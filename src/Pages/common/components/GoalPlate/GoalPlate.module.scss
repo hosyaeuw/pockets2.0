@@ -1,0 +1,21 @@
+.goal-plate {
+    height: 96px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    &__content {
+        height: 50px;
+        width: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+.graph {
+    height: 72px !important;
+    width: 72px !important;
+}
