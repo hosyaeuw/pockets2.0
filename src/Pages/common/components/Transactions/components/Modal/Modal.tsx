@@ -50,8 +50,17 @@ type TFormData = {
 const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
     const { addTransaction } = useTransactions();
 
-    const { handleSubmit, control, reset } = useForm<TFormData>();
+    const { handleSubmit, control, reset, getValues } =
+        useForm<TFormData>();
     const [tab, setTab] = React.useState<TransactionType>(startTab);
+
+    const onChangeTabHandler = React.useCallback(
+        (value: string) => {
+            reset({ ...getValues(), category: undefined });
+            setTab(value as TransactionType);
+        },
+        [reset, getValues]
+    );
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
@@ -81,9 +90,7 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
                 <div className={styles.form__tabs}>
                     <Tabs
                         options={tabs}
-                        onChange={(value) => {
-                            setTab(value as TransactionType);
-                        }}
+                        onChange={onChangeTabHandler}
                         defaultValue={tab}
                     />
                 </div>
