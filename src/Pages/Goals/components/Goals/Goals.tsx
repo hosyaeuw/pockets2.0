@@ -66,7 +66,7 @@ const Wrapper: React.FC<{ items: TGoal[]; openModal: () => void }> = ({
             onMouseEnter={onMouseEnterHandler}
             onMouseLeave={onMouseLeaveHandler}
         >
-            {[...items, ...items].map((item) => (
+            {items.map((item) => (
                 <GoalCard item={item} />
             ))}
         </div>
