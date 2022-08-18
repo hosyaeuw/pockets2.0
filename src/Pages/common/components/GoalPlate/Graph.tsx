@@ -10,7 +10,9 @@ const Graph: React.FC<{ totalAmount: number; amount: number }> = ({
     totalAmount,
     amount,
 }) => {
-    const color = RandomHelper.choice(colors);
+    const percent = Math.ceil((amount / totalAmount) * 100);
+
+    const color = colors[Math.floor(percent / 25)];
 
     const data = {
         labels: ["", ""],
@@ -48,7 +50,7 @@ const Graph: React.FC<{ totalAmount: number; amount: number }> = ({
                 ctx.font = "3em Verdana";
                 ctx.fillStyle = color;
                 ctx.textBaseline = "top";
-                const text = `${((amount / totalAmount) * 100).toFixed()}%`;
+                const text = `${percent}%`;
                 const textX = Math.round(
                     (width - ctx.measureText(text).width) / 2
                 );
