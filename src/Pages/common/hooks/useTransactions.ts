@@ -21,10 +21,11 @@ export type TGlobal = {
 
 const useTransactions = () => {
     const dispatch = useDispatch();
-    const [items, global] = useTypesSelector(
+    const [items, global, freeMoney] = useTypesSelector(
         ({ transactions, globalTransactions }) => [
             transactions.items,
             globalTransactions.data,
+            globalTransactions.freeMoney,
         ]
     );
 
@@ -57,6 +58,7 @@ const useTransactions = () => {
         addTransaction,
         items,
         global,
+        freeMoney,
     };
 };
 

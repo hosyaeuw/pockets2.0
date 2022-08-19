@@ -1,3 +1,4 @@
+import useTransactions from "../../Pages/common/hooks/useTransactions";
 import ArrowLink from "../ArrowLink";
 import Text from "../Text";
 import styles from "./Header.module.scss";
@@ -8,6 +9,8 @@ type Props = {
 };
 
 const Header: React.FC<Props> = ({ title, prevPath }) => {
+    const { freeMoney } = useTransactions();
+
     return (
         <div className={styles.header}>
             <div className={styles.header__left}>
@@ -16,7 +19,7 @@ const Header: React.FC<Props> = ({ title, prevPath }) => {
             </div>
             <div className={styles.header__right}>
                 <Text className={styles.header__amount} size="xl">
-                    <b>0</b>
+                    <b>{freeMoney}</b>
                 </Text>
                 <Text size="s" color="secondary">
                     На счету
