@@ -11,6 +11,7 @@ import useCategories, {
     TCategory,
 } from "../../../../../common/hooks/useCategories";
 import useGoals from "../../../../../common/hooks/useGoals";
+import useTransactions from "../../../../../common/hooks/useTransactions";
 
 import styles from "./Modal.module.scss";
 
@@ -27,10 +28,16 @@ type TFormData = {
     percent: string;
     category: TCategory;
 };
-
+// TODO: создать контроллеры через хук useController
 const Modal: React.FC<Props> = ({ show, onClose }) => {
-    const { handleSubmit, control, reset } = useForm<TFormData>();
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+    } = useForm<TFormData>();
     const { addGoal } = useGoals();
+    const { freeMoney } = useTransactions();
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
@@ -70,7 +77,11 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         required: "Обязательное поле",
                     }}
                     render={({ field }) => (
-                        <Input {...field} placeholder="Введите название цели" />
+                        <Input
+                            {...field}
+                            error={errors["name"]?.message}
+                            placeholder="Введите название цели"
+                        />
                     )}
                 />
                 <div className={styles.field}>
@@ -84,6 +95,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         render={({ field }) => (
                             <div className={styles.field_amount}>
                                 <Input
+                                    error={errors["total_amount"]?.message}
                                     type="number"
                                     {...field}
                                     placeholder="0"
@@ -99,6 +111,11 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         name="initial_deposit"
                         rules={{
                             required: "Обязательное поле",
+                            validate: (data) => {
+                                if (+data > freeMoney) {
+                                    return "У вас нету столько денег";
+                                }
+                            },
                         }}
                         render={({ field }) => (
                             <div className={styles.field_amount}>
@@ -106,6 +123,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                                     type="number"
                                     {...field}
                                     placeholder="0"
+                                    error={errors["initial_deposit"]?.message}
                                 />
                             </div>
                         )}
@@ -137,6 +155,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         render={({ field }) => (
                             <div className={styles.field_number}>
                                 <Input
+                                    error={errors["deposit_term"]?.message}
                                     type="number"
                                     {...field}
                                     placeholder="1"
@@ -155,7 +174,11 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         }}
                         render={({ field }) => (
                             <div className={styles.field_number}>
-                                <Input {...field} placeholder="0%" />
+                                <Input
+                                    error={errors["percent"]?.message}
+                                    {...field}
+                                    placeholder="0%"
+                                />
                             </div>
                         )}
                     />

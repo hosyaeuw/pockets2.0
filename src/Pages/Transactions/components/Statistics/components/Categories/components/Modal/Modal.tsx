@@ -21,7 +21,12 @@ type TFormData = {
 
 const Modal: React.FC<Props> = ({ show, onClose }) => {
     const { addCategory } = useCategories();
-    const { handleSubmit, control, reset } = useForm<TFormData>();
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+    } = useForm<TFormData>();
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
@@ -53,6 +58,7 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         <Input
                             {...field}
                             placeholder="Введите название категории"
+                            error={errors["category_name"]?.message}
                         />
                     )}
                 />

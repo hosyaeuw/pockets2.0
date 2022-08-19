@@ -50,8 +50,13 @@ type TFormData = {
 const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
     const { addTransaction } = useTransactions();
 
-    const { handleSubmit, control, reset, getValues } =
-        useForm<TFormData>();
+    const {
+        handleSubmit,
+        control,
+        reset,
+        getValues,
+        formState: { errors },
+    } = useForm<TFormData>();
     const [tab, setTab] = React.useState<TransactionType>(startTab);
 
     const onChangeTabHandler = React.useCallback(
@@ -102,7 +107,12 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
                             required: "Обязательное поле",
                         }}
                         render={({ field }) => (
-                            <Input type="date" {...field} placeholder="Дата" />
+                            <Input
+                                error={errors["date"]?.message}
+                                type="date"
+                                {...field}
+                                placeholder="Дата"
+                            />
                         )}
                     />
                     {tab === "expense" && (
@@ -127,6 +137,7 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
                             <Input
                                 type="number"
                                 placeholder="Сумма"
+                                error={errors["amount"]?.message}
                                 {...field}
                             />
                         )}
