@@ -2,7 +2,6 @@ import { Chart } from "chart.js";
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { colors } from "../../../../utils/graph";
-import RandomHelper from "../../../../utils/randomHelper";
 
 import styles from "./GoalPlate.module.scss";
 
@@ -10,9 +9,9 @@ const Graph: React.FC<{ totalAmount: number; amount: number }> = ({
     totalAmount,
     amount,
 }) => {
-    const percent = Math.ceil((amount / totalAmount) * 100);
+    const percent = Math.min(Math.ceil((amount / totalAmount) * 100), 100);
 
-    const color = colors[Math.floor(percent / 25)];
+    const color = colors[Math.floor((percent - 1) / 25)];
 
     const data = {
         labels: ["", ""],
@@ -68,6 +67,7 @@ const Graph: React.FC<{ totalAmount: number; amount: number }> = ({
             data={data}
             options={options}
             plugins={plugins}
+            redraw={true}
         />
     );
 };
