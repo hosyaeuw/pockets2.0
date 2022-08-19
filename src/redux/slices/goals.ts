@@ -17,15 +17,26 @@ export const goalsSlice = createSlice({
         addGoalsAction: (state, action: PayloadAction<TGoal>) => {
             state.items.push(action.payload);
         },
+        incrementGoalAction: (
+            state,
+            action: PayloadAction<{ id: number; amount: number }>
+        ) => {
+            const item = state.items.find(
+                (item) => item.id === action.payload.id
+            );
+            if (item) {
+                item.amount += action.payload.amount;
+            }
+        },
         deleteGoalsAction: (state, action: PayloadAction<number>) => {
             state.items = state.items.filter(
-                (item) => item.id === action.payload
+                (item) => item.id !== action.payload
             );
         },
     },
 });
 
-export const { addGoalsAction, deleteGoalsAction } =
+export const { addGoalsAction, incrementGoalAction, deleteGoalsAction } =
     goalsSlice.actions;
 
 export default goalsSlice.reducer;
