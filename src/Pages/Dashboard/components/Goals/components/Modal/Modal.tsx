@@ -21,10 +21,10 @@ type Props = {
 
 type TFormData = {
     name: string;
-    total_amount: number;
-    initial_deposit: number;
-    deposit_term: number;
-    percent: number;
+    total_amount: string;
+    initial_deposit: string;
+    deposit_term: string;
+    percent: string;
     category: TCategory;
 };
 
@@ -34,7 +34,13 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
-            addGoal(data);
+            addGoal({
+                ...data,
+                total_amount: +data.total_amount,
+                initial_deposit: +data.initial_deposit,
+                deposit_term: +data.deposit_term,
+                percent: +data.percent,
+            });
             reset();
             onClose();
         },

@@ -43,7 +43,7 @@ const tabs: TTab[] = [
 
 type TFormData = {
     date: string;
-    amount: number;
+    amount: string;
     category?: TCategory;
 };
 
