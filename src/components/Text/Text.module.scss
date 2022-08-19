@@ -1,6 +1,7 @@
 $default: #FFFFFF;
 $secondary: #ffffff80;
 $primary: #5D5FEF;
+$danger: #FC455B;
 
 .one-line {
     overflow: hidden;
@@ -19,6 +20,10 @@ $primary: #5D5FEF;
 
     &primary {
         color: $primary;
+    }
+
+    &danger {
+        color: $danger;
     }
 }
 

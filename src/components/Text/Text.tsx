@@ -3,7 +3,7 @@ import classNames from "classnames";
 import styles from "./Text.module.scss";
 
 type Props = {
-    color?: "default" | "secondary" | "primary";
+    color?: "default" | "secondary" | "primary" | "danger";
     size?: "s" | "m" | "l" | "xl";
     className?: string;
     align?: "left" | "right" | "center";
