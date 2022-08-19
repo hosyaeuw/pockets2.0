@@ -1,5 +1,6 @@
-import { EllipsisIcon } from "../../../../../../assets";
+import React from "react";
 import { Button, Content, Text } from "../../../../../../components";
+import DateHelper from "../../../../../../utils/dateHelper";
 import { GoalPlate } from "../../../../../common/components";
 import { TGoal } from "../../../../../common/hooks/useGoals";
 
@@ -7,6 +8,7 @@ import styles from "./GoalCard.module.scss";
 
 type Props = {
     item: TGoal;
+    onClick: () => void;
 };
 
 const GoalCardText: React.FC<{ title: string; count: string | number }> = ({
@@ -28,39 +30,18 @@ const GoalCardText: React.FC<{ title: string; count: string | number }> = ({
     );
 };
 
-const GoalCard: React.FC<Props> = ({ item }) => {
+const GoalCard: React.FC<Props> = ({ item, onClick }) => {
+    const daysToFinishGoal = React.useMemo(
+        () =>
+            DateHelper.getDateDifferenceDays(
+                new Date(),
+                new Date(item.want_close)
+            ),
+        [item]
+    );
+
     return (
         <Content variant="primary" className={styles["goal-cart"]}>
-            <div
-                style={{
-                    position: "absolute",
-                    right: 0,
-                    top: 0,
-                    height: 34,
-                    width: 34,
-                    background: "#17181C",
-                    borderRadius: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <Button variant="ghost">
-                    <div
-                        style={{
-                            height: 24,
-                            width: 24,
-                            background: "#1D2023",
-                            borderRadius: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <EllipsisIcon />
-                    </div>
-                </Button>
-            </div>
             <GoalPlate goal={item} />
             <div
                 style={{
@@ -72,15 +53,18 @@ const GoalCard: React.FC<Props> = ({ item }) => {
                 }}
             >
                 <GoalCardText title="В прошлом месяце" count={0} />
-                <GoalCardText title="Ставка" count={`${0}%`} />
-                <GoalCardText title="Осталось дней" count={1200} />
+                <GoalCardText title="Ставка" count={`${item.percent}%`} />
+                <GoalCardText
+                    title="Осталось дней"
+                    count={daysToFinishGoal.toFixed()}
+                />
             </div>
             <div
                 style={{
                     padding: "0 20px",
                 }}
             >
-                <Button>
+                <Button onClick={onClick}>
                     <Text size="l">Пополнить</Text>
                 </Button>
             </div>
