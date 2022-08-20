@@ -26,6 +26,7 @@ export const goalsSlice = createSlice({
             );
             if (item) {
                 item.amount += action.payload.amount;
+                item.replenishmentCount += 1;
             }
         },
         deleteGoalsAction: (state, action: PayloadAction<number>) => {

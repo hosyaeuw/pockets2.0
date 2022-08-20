@@ -23,6 +23,7 @@ export type TGoal = {
     want_close: string;
     closed_at: string | null;
     category: TCategory;
+    replenishmentCount: number; 
 };
 
 const useGoals = () => {
@@ -55,6 +56,7 @@ const useGoals = () => {
                     want_close: DateHelper.formatDateToStr(wantClose),
                     created_at: DateHelper.formatDateToStr(currDate),
                     closed_at: null,
+                    replenishmentCount: 0,
                 })
             );
         },

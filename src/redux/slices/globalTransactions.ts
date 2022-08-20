@@ -36,7 +36,11 @@ export const globalTransactionsSlice = createSlice({
             if (action.payload.category) {
                 state.freeMoney -= action.payload.initial_deposit;
             }
-        }
+        },
+        // @ts-expect-error
+        [goalsSlice.actions.incrementGoalAction]: (state, action) => {
+            state.freeMoney -= action.payload.amount;
+        },
     },
 });
 

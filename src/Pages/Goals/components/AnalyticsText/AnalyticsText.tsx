@@ -4,16 +4,16 @@ import styles from "./AnalyticsText.module.scss";
 
 type Props = {
     title: string;
-    count: number;
+    value?: number | string;
 };
 
-const AnalyticsText: React.FC<Props> = ({ title, count }) => {
+const AnalyticsText: React.FC<Props> = ({ title, value }) => {
     return (
         <div className={styles["analytics-text"]}>
             <Text size="s" color="secondary">
                 {title}
             </Text>
-            <Text size="s">{count}</Text>
+            <Text size="s">{value ?? "-"}</Text>
         </div>
     );
 };
