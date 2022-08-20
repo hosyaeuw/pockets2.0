@@ -29,11 +29,11 @@ const Wrapper: React.FC<Props> = () => {
         return (
             <Content
                 variant="primary"
-                className={styles["table__empty-container"]}
+                className={styles["goal-list__empty-container"]}
             >
                 <Modal show={showModal} onClose={toggleShowModalHandler} />
-                <div className={styles.table__empty}>
-                    <div className={styles["table__empty-wrapper"]}>
+                <div className={styles['goal-list__empty']}>
+                    <div className={styles["goal-list__empty-wrapper"]}>
                         <Text size="l" color="secondary">
                             У вас нет ни одной цели
                         </Text>
@@ -48,13 +48,7 @@ const Wrapper: React.FC<Props> = () => {
 
     return (
         <div
-            style={{
-                position: "relative",
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                gap: 6,
-            }}
+            className={styles['goal-list__items']}
         >
             {sortedItemsByPercent.slice(0, 3).map((item) => (
                 <GoalPlate key={item.id} goal={item} />
@@ -65,7 +59,7 @@ const Wrapper: React.FC<Props> = () => {
 
 const GoalList = () => {
     return (
-        <div className={styles["table-container"]}>
+        <div className={styles["goal-list-container"]}>
             <Wrapper />
         </div>
     );

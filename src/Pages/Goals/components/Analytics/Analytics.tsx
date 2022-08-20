@@ -3,49 +3,25 @@ import AnalyticsText from "../AnalyticsText";
 
 import styles from "./Analytics.module.scss";
 
-// TODO: стили в css
 const Analytics = () => {
     return (
         <Content className={styles.analytics}>
             <Text size="l">
                 <b>Аналитика</b>
             </Text>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 8,
-                    marginTop: 16,
-                }}
-            >
+            <div className={styles.analytics__plates}>
                 <Plate title="Цели" rightComponent={<Text size="l">0</Text>} />
                 <Plate
                     title="Средств на целях"
                     rightComponent={<Text size="l">0</Text>}
                 />
             </div>
-            <div
-                style={{
-                    borderBottom: "4px solid #17181C",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 20,
-                    marginTop: 30,
-                    paddingBottom: 24,
-                }}
-            >
+            <div className={styles.analytics__text_top}>
                 <AnalyticsText title="Всего доход от %" count={0} />
                 <AnalyticsText title="В этом месяце доход от %" count={0} />
                 <AnalyticsText title="Ближайшая цель (дней)" count={0} />
             </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 16,
-                    marginTop: 24,
-                }}
-            >
+            <div className={styles.analytics__text_bottom}>
                 <AnalyticsText title="Самая успешная категория" count={0} />
                 <AnalyticsText title="Самая популярная категория" count={0} />
             </div>

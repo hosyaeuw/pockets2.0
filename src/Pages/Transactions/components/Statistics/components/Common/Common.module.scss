@@ -5,6 +5,12 @@
     justify-content: space-between;
     flex: 1;
 
+    &__analytics {
+        &-text {
+            z-index: 9999;
+        }
+    }
+
     &__title {
         margin-bottom: 16px;
         margin-left: 16px;

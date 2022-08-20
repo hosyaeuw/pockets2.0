@@ -1,6 +1,25 @@
-.goal-cart {
+.goal-card {
     position: relative;
     height: 100%;
     width: 277px;
     padding: 0 16px;
+
+    &__info {
+        height: 92px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 16px 0;
+    }
+
+    &__text {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__btn {
+        &-container {
+            padding: 0 20px,
+        }
+    }
 }

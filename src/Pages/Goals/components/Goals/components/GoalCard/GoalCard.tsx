@@ -16,12 +16,7 @@ const GoalCardText: React.FC<{ title: string; count: string | number }> = ({
     count,
 }) => {
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-            }}
-        >
+        <div className={styles["goal-card__text"]}>
             <Text color="secondary" size="s">
                 {title}
             </Text>
@@ -41,17 +36,9 @@ const GoalCard: React.FC<Props> = ({ item, onClick }) => {
     );
 
     return (
-        <Content variant="primary" className={styles["goal-cart"]}>
+        <Content variant="primary" className={styles["goal-card"]}>
             <GoalPlate goal={item} />
-            <div
-                style={{
-                    height: 92,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    margin: "16px 0",
-                }}
-            >
+            <div className={styles["goal-card__info"]}>
                 <GoalCardText title="В прошлом месяце" count={0} />
                 <GoalCardText title="Ставка" count={`${item.percent}%`} />
                 <GoalCardText
@@ -59,11 +46,7 @@ const GoalCard: React.FC<Props> = ({ item, onClick }) => {
                     count={daysToFinishGoal.toFixed()}
                 />
             </div>
-            <div
-                style={{
-                    padding: "0 20px",
-                }}
-            >
+            <div className={styles["goal-card__btn-container"]}>
                 <Button onClick={onClick}>
                     <Text size="l">Пополнить</Text>
                 </Button>

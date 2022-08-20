@@ -7,6 +7,23 @@
         flex-direction: column;
         align-items: center;
 
+        &-container {
+            display: flex;
+            align-items: center;
+        }
+
+        &__btn {
+            &-container {
+                width: 196px,
+            }
+        }
+
+        &__input {
+            &-container {
+                width: 250px,
+            }
+        }
+
         .field {
             display: flex;
             justify-content: space-between;

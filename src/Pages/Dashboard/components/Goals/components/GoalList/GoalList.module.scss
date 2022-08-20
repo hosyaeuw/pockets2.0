@@ -1,4 +1,4 @@
-.table {
+.goal-list {
     &-container {
         flex: 1;
     }
@@ -21,5 +21,13 @@
             align-items: center;
             gap: 24px;
         }
+    }
+
+    &__items {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
 }

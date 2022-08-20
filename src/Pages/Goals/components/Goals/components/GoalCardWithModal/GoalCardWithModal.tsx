@@ -53,12 +53,7 @@ const Modal: React.FC<{ item: TGoal; show: boolean; onClose: () => void }> = ({
                     </div>
                 }
             />
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                }}
-            >
+            <div className={styles["form-container"]}>
                 <form
                     onSubmit={handleSubmit(onSubmitHandler)}
                     className={styles.form}
@@ -72,11 +67,7 @@ const Modal: React.FC<{ item: TGoal; show: boolean; onClose: () => void }> = ({
                                 required: "Обязательное поле",
                             }}
                             render={({ field }) => (
-                                <div
-                                    style={{
-                                        width: 250,
-                                    }}
-                                >
+                                <div className={styles['form__input-container']}>
                                     <Input
                                         type="number"
                                         {...field}
@@ -86,11 +77,7 @@ const Modal: React.FC<{ item: TGoal; show: boolean; onClose: () => void }> = ({
                             )}
                         />
                     </div>
-                    <div
-                        style={{
-                            width: 196,
-                        }}
-                    >
+                    <div className={styles["form__btn-container"]}>
                         <Button type="submit">
                             <Text size="l">Пополнить</Text>
                         </Button>
