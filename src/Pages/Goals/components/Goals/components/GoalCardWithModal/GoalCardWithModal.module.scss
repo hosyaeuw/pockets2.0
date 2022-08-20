@@ -1,6 +1,17 @@
 .modal {
     width: 568px;
 
+    &__plate {
+        height: 44px;
+
+        &-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+    }
+
     .form {
         width: 100%;
         display: flex;
@@ -14,13 +25,14 @@
 
         &__btn {
             &-container {
+                margin-top: 64px;
                 width: 196px,
             }
         }
 
         &__input {
             &-container {
-                width: 250px,
+                width: 228px,
             }
         }
 
@@ -28,6 +40,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
     }
 }

@@ -9,6 +9,7 @@ import {
 } from "../../../../../../components";
 import useGoals, { TGoal } from "../../../../../common/hooks/useGoals";
 import useModal from "../../../../../common/hooks/useModal";
+import useTransactions from "../../../../../common/hooks/useTransactions";
 import GoalCard from "../GoalCard/GoalCard";
 
 import styles from "./GoalCardWithModal.module.scss";
@@ -22,8 +23,14 @@ const Modal: React.FC<{ item: TGoal; show: boolean; onClose: () => void }> = ({
     show,
     onClose,
 }) => {
-    const { handleSubmit, control, reset } = useForm<TFormData>();
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+    } = useForm<TFormData>();
     const { incrementGoal } = useGoals();
+    const { freeMoney } = useTransactions();
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
@@ -41,18 +48,21 @@ const Modal: React.FC<{ item: TGoal; show: boolean; onClose: () => void }> = ({
             className={styles.modal}
             title="Пополнить цель"
         >
-            <Plate title="Текущий баланс" />
-            <Plate
-                title={item.name}
-                rightComponent={
-                    <div>
-                        <Text>
-                            <b>{item.amount}</b>
-                        </Text>{" "}
-                        <Text>/ {item.total_amount}</Text>
-                    </div>
-                }
-            />
+            <div className={styles["modal__plate-container"]}>
+                <Plate title="Текущий баланс" className={styles.modal__plate} />
+                <Plate
+                    title={item.name}
+                    className={styles.modal__plate}
+                    rightComponent={
+                        <div>
+                            <Text>
+                                <b>{item.amount}</b>
+                            </Text>{" "}
+                            <Text>/ {item.total_amount}</Text>
+                        </div>
+                    }
+                />
+            </div>
             <div className={styles["form-container"]}>
                 <form
                     onSubmit={handleSubmit(onSubmitHandler)}
@@ -65,13 +75,21 @@ const Modal: React.FC<{ item: TGoal; show: boolean; onClose: () => void }> = ({
                             name="amount"
                             rules={{
                                 required: "Обязательное поле",
+                                validate: (data) => {
+                                    if (+data > freeMoney) {
+                                        return "У вас нету столько денег";
+                                    }
+                                },
                             }}
                             render={({ field }) => (
-                                <div className={styles['form__input-container']}>
+                                <div
+                                    className={styles["form__input-container"]}
+                                >
                                     <Input
+                                        error={errors["amount"]?.message}
                                         type="number"
                                         {...field}
-                                        placeholder="0"
+                                        placeholder={freeMoney > 10 ? `от 10 до ${freeMoney}` : '0'}
                                     />
                                 </div>
                             )}
