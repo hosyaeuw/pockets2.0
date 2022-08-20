@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 import { Select, Text } from "../../../../components";
 import useCategories, { TCategory } from "../../hooks/useCategories";

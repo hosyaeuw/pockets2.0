@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { GoalImg } from "../../../../assets";
 import { Button, Content, Text } from "../../../../components";
 import useGoals, { TGoal } from "../../../common/hooks/useGoals";

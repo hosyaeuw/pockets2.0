@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Button, Plate, Text } from "../../../../components";
 import useModal from "../../hooks/useModal";
 import useTransactions, { TransactionType } from "../../hooks/useTransactions";

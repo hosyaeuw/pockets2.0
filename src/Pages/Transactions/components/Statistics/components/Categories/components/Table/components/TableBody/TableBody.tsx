@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 import { Row, TablePropGetter, TableProps } from "react-table";
 
 import styles from "./TableBody.module.scss";

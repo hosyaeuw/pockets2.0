@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 import { HeaderGroup } from "react-table";
 
 import styles from "./TableHeader.module.scss";

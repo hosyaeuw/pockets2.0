@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Button, Content, Text } from "../../../../../../components";
 import DateHelper from "../../../../../../utils/dateHelper";
 import { GoalPlate } from "../../../../../common/components";

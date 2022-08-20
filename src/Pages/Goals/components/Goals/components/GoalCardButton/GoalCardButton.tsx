@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { EllipsisIcon } from "../../../../../../assets";
 import { Button, Text } from "../../../../../../components";
 import useGoals, { TGoal } from "../../../../../common/hooks/useGoals";

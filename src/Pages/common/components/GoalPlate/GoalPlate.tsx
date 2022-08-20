@@ -1,4 +1,3 @@
-import React from "react";
 import { Content, Text } from "../../../../components";
 import { TGoal } from "../../hooks/useGoals";
 import Graph from "./Graph";

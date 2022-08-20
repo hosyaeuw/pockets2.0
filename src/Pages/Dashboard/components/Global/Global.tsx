@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Content, Text } from "../../../../components";
 import { GlobalPlates } from "../../../common/components";
 import useCategories from "../../../common/hooks/useCategories";

@@ -1,5 +1,5 @@
-import classNames from "classnames";
 import * as React from "react";
+import classNames from "classnames";
 import { Button, Text } from "../";
 
 import styles from "./Tabs.module.scss";
