@@ -6,7 +6,7 @@ import useGoals from "../../../../../common/hooks/useGoals";
 import useModal from "../../../../../common/hooks/useModal";
 import Modal from "../Modal";
 
-import styles from "./Table.module.scss";
+import styles from "./GoalList.module.scss";
 
 type Props = {};
 
@@ -63,7 +63,7 @@ const Wrapper: React.FC<Props> = () => {
     );
 };
 
-const Table = () => {
+const GoalList = () => {
     return (
         <div className={styles["table-container"]}>
             <Wrapper />
@@ -71,4 +71,4 @@ const Table = () => {
     );
 };
 
-export default Table;
+export default GoalList;

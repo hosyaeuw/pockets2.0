@@ -1,20 +1,8 @@
 import { Content, Plate, Text } from "../../../../components";
+import AnalyticsText from "../AnalyticsText";
 
 import styles from "./Analytics.module.scss";
-// TODO: вынести
-const AnalyticsText: React.FC<{ title: string; count: number }> = ({
-    title,
-    count,
-}) => {
-    return (
-        <div className={styles["analytics-text"]}>
-            <Text size="s" color="secondary">
-                {title}
-            </Text>
-            <Text size="s">{count}</Text>
-        </div>
-    );
-};
+
 // TODO: стили в css
 const Analytics = () => {
     return (

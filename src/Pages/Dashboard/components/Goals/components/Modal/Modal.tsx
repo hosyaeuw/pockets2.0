@@ -1,15 +1,13 @@
 import React from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
     Button,
     Input,
     PocketsModal,
-    Select,
     Text,
 } from "../../../../../../components";
-import useCategories, {
-    TCategory,
-} from "../../../../../common/hooks/useCategories";
+import { CategoriesSelect } from "../../../../../common/components";
+import { TCategory } from "../../../../../common/hooks/useCategories";
 import useGoals from "../../../../../common/hooks/useGoals";
 import useTransactions from "../../../../../common/hooks/useTransactions";
 
@@ -139,7 +137,9 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         }}
                         render={({ field }) => (
                             <div className={styles.field_select}>
-                                <CategoriesSelect field={field} />
+                                <CategoriesSelect<TFormData, "category">
+                                    field={field}
+                                />
                             </div>
                         )}
                     />
@@ -194,29 +194,3 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
 };
 
 export default Modal;
-
-// TODO: вынести и соединить с модалки транзаций
-const CategoriesSelect: React.FC<{
-    field: ControllerRenderProps<TFormData, "category">;
-}> = ({ field }) => {
-    const { items: categories } = useCategories();
-    const [value, setValue] = React.useState<TCategory | null>();
-
-    const onChangeHandler = React.useCallback(
-        (value: TCategory) => {
-            setValue(value);
-            field.onChange(value);
-        },
-        [field]
-    );
-
-    return (
-        <Select {...field} value={value?.name} onChange={onChangeHandler}>
-            {categories.map((category) => (
-                <Select.Option value={category}>
-                    <Text>{category.name}</Text>
-                </Select.Option>
-            ))}
-        </Select>
-    );
-};

@@ -17,7 +17,7 @@ type Props = {
 
 const Wrapper: React.FC<Props> = ({ openModal }) => {
     const { items } = useCategories();
-    // TODO: после добавления апи в useMemo?
+
     const data = tableData(items);
 
     const tableInstance = useTable<any>({ columns, data });
@@ -70,7 +70,7 @@ const Wrapper: React.FC<Props> = ({ openModal }) => {
         </>
     );
 };
-// TODO: вынести это враимодействие с модалками в хук
+
 const Table = () => {
     const { showModal, toggleShowModalHandler } = useModal();
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import {
     Button,
@@ -7,15 +7,13 @@ import {
     Text,
     Tabs,
     Input,
-    Select,
     InputsContainer,
 } from "../../../../../../components";
-import useCategories, {
-    TCategory,
-} from "../../../../../common/hooks/useCategories";
+import { TCategory } from "../../../../../common/hooks/useCategories";
 import useTransactions, {
     TransactionType,
 } from "../../../../../common/hooks/useTransactions";
+import CategoriesSelect from "../../../CategoriesSelect";
 
 import styles from "./Modal.module.scss";
 
@@ -123,7 +121,7 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
                                 required: "Обязательное поле",
                             }}
                             render={({ field }) => (
-                                <CategoriesSelect field={field} />
+                                <CategoriesSelect<TFormData, "category"> field={field} />
                             )}
                         />
                     )}
@@ -154,28 +152,3 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
 };
 
 export default Modal;
-// TODO: вынести
-const CategoriesSelect: React.FC<{
-    field: ControllerRenderProps<TFormData, "category">;
-}> = ({ field }) => {
-    const { items: categories } = useCategories();
-    const [value, setValue] = React.useState<TCategory | null>();
-
-    const onChangeHandler = React.useCallback(
-        (value: TCategory) => {
-            setValue(value);
-            field.onChange(value);
-        },
-        [field]
-    );
-
-    return (
-        <Select {...field} value={value?.name} onChange={onChangeHandler}>
-            {categories.map((category) => (
-                <Select.Option value={category}>
-                    <Text>{category.name}</Text>
-                </Select.Option>
-            ))}
-        </Select>
-    );
-};

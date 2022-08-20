@@ -1,6 +1,6 @@
 import { ArrowLink, Content, Text } from "../../../../components";
 import { paths } from "../../../../router/paths";
-import { Table } from "./components";
+import { GoalList } from "./components";
 
 import styles from "./Goals.module.scss";
 
@@ -19,7 +19,7 @@ const Goals = () => {
                 </div>
             }
         >
-            <Table />
+            <GoalList />
         </Content>
     );
 };
