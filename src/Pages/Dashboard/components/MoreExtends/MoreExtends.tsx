@@ -1,24 +1,18 @@
-import * as React from "react";
-import { Text } from "../../../../components";
-import useCategories from "../../../common/hooks/useCategories";
+import { Text } from '../../../../components';
+import useFetchMonthlyTransaction from '../../../common/hooks/statistics/useFetchMonthlyTransaction';
 
-import styles from "./MoreExtends.module.scss";
+import styles from './MoreExtends.module.scss';
 
 const MoreExtends = () => {
-    const { items } = useCategories();
-
-    const moreExtendsCategory = React.useMemo(
-        () => [...items].sort((a, b) => b.amount - a.amount)[0],
-        [items]
-    );
+    const { data } = useFetchMonthlyTransaction();
 
     return (
-        <div className={styles["more-extends"]}>
+        <div className={styles['more-extends']}>
             <Text size="s" color="secondary">
                 Больше всего расходов
             </Text>
             <Text size="s" oneLine>
-                {moreExtendsCategory?.name ?? "-"}
+                {data.most_expensive_category?.name ?? '-'}
             </Text>
         </div>
     );

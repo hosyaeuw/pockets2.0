@@ -8,6 +8,17 @@ class RandomHelper {
     static choice(array: any[]) {
         return array[RandomHelper.getRandomInt(0, array.length - 1)];
     }
+
+    static choiceRandomCount(array: any[], count: number) {
+        const arrayCopy = [...array];
+        return Array(count)
+            .fill(0)
+            .map(() => {
+                const value = RandomHelper.choice(arrayCopy);
+                arrayCopy.splice(arrayCopy.indexOf(value), 1);
+                return value;
+            });
+    }
 }
 
 export default RandomHelper;

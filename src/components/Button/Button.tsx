@@ -1,22 +1,26 @@
-import classNames from "classnames";
+import classNames from 'classnames';
 
-import styles from "./Button.module.scss";
+import Spin from '../Spin';
+
+import styles from './Button.module.scss';
 
 type Props = {
     className?: string;
     onClick?: () => void;
-    size?: "s" | "m";
-    variant?: "default" | "ghost" | "secondary";
-    type?: "button" | "submit";
+    size?: 's' | 'm';
+    variant?: 'default' | 'ghost' | 'secondary';
+    type?: 'button' | 'submit';
+    loading?: boolean;
 };
 
 const Button: React.FC<React.PropsWithChildren<Props>> = ({
     children,
     className,
     onClick,
-    size = "m",
-    variant = "default",
-    type = "button",
+    size = 'm',
+    variant = 'default',
+    type = 'button',
+    loading,
 }) => {
     return (
         <button
@@ -26,9 +30,13 @@ const Button: React.FC<React.PropsWithChildren<Props>> = ({
                 styles.button,
                 styles[`size__${size}`],
                 styles[`variant__${variant}`],
-                className
+                className,
+                {
+                    [styles.button_loading]: loading,
+                },
             )}
         >
+            {loading && <Spin size="small" />}
             {children}
         </button>
     );

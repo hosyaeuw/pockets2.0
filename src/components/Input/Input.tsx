@@ -1,6 +1,8 @@
-import classNames from "classnames";
-import Text from "../Text";
-import styles from "./Input.module.scss";
+import classNames from 'classnames';
+
+import Text from '../Text';
+
+import styles from './Input.module.scss';
 
 type Props = React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -8,12 +10,13 @@ type Props = React.DetailedHTMLProps<
 > & {
     error?: string;
     className?: string;
+    getRef?: (c: HTMLInputElement) => void;
 };
 
-const Input: React.FC<Props> = ({ error, className, ...other }) => {
+const Input: React.FC<Props> = ({ error, className, getRef, ...other }) => {
     return (
         <div
-            className={classNames(styles["input-container"], className, {
+            className={classNames(styles['input-container'], className, {
                 [styles.input_error]: error,
             })}
         >
@@ -22,7 +25,13 @@ const Input: React.FC<Props> = ({ error, className, ...other }) => {
                     <Text>{error}</Text>
                 </div>
             )}
-            <input {...other} className={styles.input} />
+            <input
+                ref={c => {
+                    c && getRef && getRef(c);
+                }}
+                {...other}
+                className={styles.input}
+            />
         </div>
     );
 };

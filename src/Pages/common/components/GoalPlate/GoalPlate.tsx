@@ -1,19 +1,26 @@
-import { Content, Text } from "../../../../components";
-import { TGoal } from "../../hooks/useGoals";
-import Graph from "./Graph";
+import { Content, Text } from '../../../../components';
+import { AmountHelper } from '../../../../utils/amountHelper';
+import { TGoal, TGoalTop } from '../../hooks/useGoals';
 
-import styles from "./GoalPlate.module.scss";
+import Graph from './Graph';
 
-const GoalPlate: React.FC<{ goal: TGoal }> = ({ goal }) => {
+import styles from './GoalPlate.module.scss';
+
+type Props = {
+    goal: TGoalTop | TGoal;
+};
+
+const GoalPlate: React.FC<Props> = ({ goal }) => {
     return (
-        <Content variant="primary" className={styles["goal-plate"]}>
+        <Content variant="primary" className={styles['goal-plate']}>
             <Graph amount={goal.amount} totalAmount={goal.total_amount} />
-            <div className={styles["goal-plate__content"]}>
+            <div className={styles['goal-plate__content']}>
                 <Text oneLine color="secondary">
                     {goal.name}
                 </Text>
                 <Text>
-                    <b>{goal.amount}</b> / {goal.total_amount}
+                    <b>{AmountHelper.format(goal.amount)}</b> /{' '}
+                    {AmountHelper.format(goal.total_amount)}
                 </Text>
             </div>
         </Content>

@@ -1,16 +1,17 @@
-import * as React from "react";
-import { useDispatch } from "react-redux";
-import { useTypesSelector } from "../../../hooks/useTypesSelector";
-import { addTransactionAction } from "../../../redux/slices/transactions";
-import { TCategory } from "./useCategories";
+import * as React from 'react';
 
-export type TransactionType = "income" | "expense";
+import { useDispatch } from 'react-redux';
+
+import { useTypesSelector } from '../../../hooks/useTypesSelector';
+import { addTransactionAction } from '../../../redux/slices/transactions';
+import { TCategory } from './useCategories';
+
+export type TransactionType = 'income' | 'expense';
 
 export type TTransaction = {
     id: number;
     category?: TCategory;
-    date: string;
-    type: TransactionType;
+    transaction_date: string;
     amount: number;
 };
 
@@ -19,39 +20,38 @@ export type TGlobal = {
     expense: number;
 };
 
+export type TTransactionsBalance = {
+    balance: number;
+};
+
 const useTransactions = () => {
     const dispatch = useDispatch();
-    const [items, global, freeMoney] = useTypesSelector(
-        ({ transactions, globalTransactions }) => [
-            transactions.items,
-            globalTransactions.data,
-            globalTransactions.freeMoney,
-        ]
-    );
+    const [items, global, freeMoney] = useTypesSelector(({ transactions, globalTransactions }) => [
+        transactions.items,
+        globalTransactions.data,
+        globalTransactions.freeMoney,
+    ]);
 
     const addTransaction = React.useCallback(
         ({
             date,
-            type,
             amount = 0,
             category,
         }: {
             date: string;
-            type: TransactionType;
             amount: number;
             category?: TCategory;
         }) => {
             dispatch(
                 addTransactionAction({
                     id: items[items.length]?.id ?? 0,
-                    date,
-                    type,
+                    transaction_date: date,
                     amount,
                     category,
-                })
+                }),
             );
         },
-        [dispatch, items]
+        [dispatch, items],
     );
 
     return {

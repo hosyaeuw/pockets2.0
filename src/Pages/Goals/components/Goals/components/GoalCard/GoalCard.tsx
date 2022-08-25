@@ -1,22 +1,20 @@
-import * as React from "react";
-import { Button, Content, Text } from "../../../../../../components";
-import DateHelper from "../../../../../../utils/dateHelper";
-import { GoalPlate } from "../../../../../common/components";
-import { TGoal } from "../../../../../common/hooks/useGoals";
+import * as React from 'react';
 
-import styles from "./GoalCard.module.scss";
+import { Button, Content, Text } from '../../../../../../components';
+import DateHelper from '../../../../../../utils/DateHelper';
+import { GoalPlate } from '../../../../../common/components';
+import { TGoal } from '../../../../../common/hooks/useGoals';
+
+import styles from './GoalCard.module.scss';
 
 type Props = {
     item: TGoal;
     onClick: () => void;
 };
 
-const GoalCardText: React.FC<{ title: string; count: string | number }> = ({
-    title,
-    count,
-}) => {
+const GoalCardText: React.FC<{ title: string; count: string | number }> = ({ title, count }) => {
     return (
-        <div className={styles["goal-card__text"]}>
+        <div className={styles['goal-card__text']}>
             <Text color="secondary" size="s">
                 {title}
             </Text>
@@ -27,26 +25,19 @@ const GoalCardText: React.FC<{ title: string; count: string | number }> = ({
 
 const GoalCard: React.FC<Props> = ({ item, onClick }) => {
     const daysToFinishGoal = React.useMemo(
-        () =>
-            DateHelper.getDateDifferenceDays(
-                new Date(),
-                new Date(item.want_close)
-            ),
-        [item]
+        () => DateHelper.getDateDifferenceDays(new Date(), new Date(item.want_close)),
+        [item],
     );
 
     return (
-        <Content variant="primary" className={styles["goal-card"]}>
+        <Content variant="primary" className={styles['goal-card']}>
             <GoalPlate goal={item} />
-            <div className={styles["goal-card__info"]}>
+            <div className={styles['goal-card__info']}>
                 <GoalCardText title="В прошлом месяце" count={0} />
                 <GoalCardText title="Ставка" count={`${item.percent}%`} />
-                <GoalCardText
-                    title="Осталось дней"
-                    count={daysToFinishGoal.toFixed()}
-                />
+                <GoalCardText title="Осталось дней" count={daysToFinishGoal.toFixed()} />
             </div>
-            <div className={styles["goal-card__btn-container"]}>
+            <div className={styles['goal-card__btn-container']}>
                 <Button onClick={onClick}>
                     <Text size="l">Пополнить</Text>
                 </Button>

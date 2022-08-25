@@ -1,39 +1,37 @@
-// TODO: переименовать компонент
-import * as React from "react";
-import { Button, Content, Text } from "../../../../../../components";
-import { GoalPlate } from "../../../../../common/components";
-import useGoals from "../../../../../common/hooks/useGoals";
-import useModal from "../../../../../common/hooks/useModal";
-import Modal from "../Modal";
+import classNames from 'classnames';
 
-import styles from "./GoalList.module.scss";
+import { Button, Content, Spin, Text } from '../../../../../../components';
+import { GoalPlate } from '../../../../../common/components';
+import useFetchTopGoals from '../../../../../common/hooks/goals/useFetchTopGoals';
+import useModal from '../../../../../common/hooks/useModal';
+import Modal from '../Modal';
+
+import styles from './GoalList.module.scss';
 
 type Props = {};
 
 const Wrapper: React.FC<Props> = () => {
-    const { items } = useGoals();
+    const { items, isLoading } = useFetchTopGoals();
 
     const { showModal, toggleShowModalHandler } = useModal();
 
-    const sortedItemsByPercent = React.useMemo(
-        () =>
-            [...items].sort(
-                (a, b) =>
-                    (b.amount / b.total_amount) * 100 -
-                    (a.amount / a.total_amount) * 100
-            ),
-        [items]
-    );
-
-    if (items.length === 0) {
+    if (isLoading) {
         return (
             <Content
                 variant="primary"
-                className={styles["goal-list__empty-container"]}
+                className={classNames(styles['goal-list__empty-container'], styles.loading)}
             >
+                <Spin />
+            </Content>
+        );
+    }
+
+    if (items.length === 0) {
+        return (
+            <Content variant="primary" className={styles['goal-list__empty-container']}>
                 <Modal show={showModal} onClose={toggleShowModalHandler} />
                 <div className={styles['goal-list__empty']}>
-                    <div className={styles["goal-list__empty-wrapper"]}>
+                    <div className={styles['goal-list__empty-wrapper']}>
                         <Text size="l" color="secondary">
                             У вас нет ни одной цели
                         </Text>
@@ -47,10 +45,8 @@ const Wrapper: React.FC<Props> = () => {
     }
 
     return (
-        <div
-            className={styles['goal-list__items']}
-        >
-            {sortedItemsByPercent.slice(0, 3).map((item) => (
+        <div className={styles['goal-list__items']}>
+            {items.map(item => (
                 <GoalPlate key={item.id} goal={item} />
             ))}
         </div>
@@ -59,7 +55,7 @@ const Wrapper: React.FC<Props> = () => {
 
 const GoalList = () => {
     return (
-        <div className={styles["goal-list-container"]}>
+        <div className={styles['goal-list-container']}>
             <Wrapper />
         </div>
     );

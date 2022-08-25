@@ -1,10 +1,11 @@
-import { Text } from "../../../../../../../../../components";
-import { TCategory } from "../../../../../../../../common/hooks/useCategories";
+import { Text } from '../../../../../../../../../components';
+import { AmountHelper } from '../../../../../../../../../utils/amountHelper';
+import { TCategory } from '../../../../../../../../common/hooks/useCategories';
 
 const tableData = (data: TCategory[]) => {
-    return data.map((item) => ({
+    return data.map(item => ({
         category: <Text>{item.name}</Text>,
-        amount: <Text>{item.amount}</Text>,
+        amount: <Text>{AmountHelper.format(item.amount)}</Text>,
     }));
 };
 

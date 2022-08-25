@@ -1,12 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
 const useModal = () => {
     const [showModal, setShowModal] = React.useState(false);
 
-    const toggleShowModalHandler = React.useCallback(
-        () => setShowModal((prev) => !prev),
-        []
-    );
+    const toggleShowModalHandler = React.useCallback(() => setShowModal(prev => !prev), []);
 
     return { showModal, toggleShowModalHandler };
 };

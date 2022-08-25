@@ -1,8 +1,9 @@
-import * as React from "react";
-import Text from "../Text";
-import Option, { OptionComponent } from "./Option/Option";
+import * as React from 'react';
 
-import styles from "./Select.module.scss";
+import Text from '../Text';
+import Option, { OptionComponent } from './Option/Option';
+
+import styles from './Select.module.scss';
 
 type Props = {
     children?: React.ReactNode;
@@ -17,7 +18,7 @@ type SelectComponent = React.FC<Props> & {
 
 const Select: SelectComponent = ({
     children,
-    placeholder = "Выберите опцию",
+    placeholder = 'Выберите опцию',
     onChange,
     value = null,
 }) => {
@@ -32,22 +33,23 @@ const Select: SelectComponent = ({
             onChange && onChange(value);
             closeOptions();
         },
-        [closeOptions, onChange]
+        [closeOptions, onChange],
     );
 
     const renderChildren = () => {
         if (Array.isArray(children) && children.length > 0) {
-            return React.Children.map(children, (child: React.ReactNode) => {
+            return React.Children.map(children, (child: React.ReactNode, index) => {
                 if (React.isValidElement(child)) {
                     return (
                         <Option
-                            selected={value === child.props.value}
+                            key={index}
                             onClick={onClickHandler}
                             value={child.props.value}
                             {...child.props}
                         />
                     );
                 }
+
                 return null;
             });
         }
@@ -55,22 +57,22 @@ const Select: SelectComponent = ({
 
     React.useEffect(() => {
         const handleOutsideClick = (event: MouseEvent) => {
-            if (
-                selectRef.current &&
-                !selectRef.current.contains(event.target as Node)
-            ) {
+            if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
                 setShowOptions(false);
             }
         };
 
-        document.body.addEventListener("click", handleOutsideClick, true);
+        document.body.addEventListener('click', handleOutsideClick, true);
 
-        return () =>
-            document.body.removeEventListener("click", handleOutsideClick);
+        return () => document.body.removeEventListener('click', handleOutsideClick);
     }, []);
 
     return (
-        <div className={styles.select} onClick={!showOptions ? openOptions : closeOptions} ref={selectRef}>
+        <div
+            className={styles.select}
+            onClick={!showOptions ? openOptions : closeOptions}
+            ref={selectRef}
+        >
             {value === null ? (
                 <Text oneLine color="secondary">
                     {placeholder}
@@ -78,9 +80,7 @@ const Select: SelectComponent = ({
             ) : (
                 <Text oneLine>{value}</Text>
             )}
-            {showOptions && (
-                <div className={styles.select__options}>{renderChildren()}</div>
-            )}
+            {showOptions && <div className={styles.select__options}>{renderChildren()}</div>}
         </div>
     );
 };

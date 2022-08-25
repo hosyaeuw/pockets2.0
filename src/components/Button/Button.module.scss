@@ -7,6 +7,15 @@ $background-secondary: #17181C;
     border: none;
     cursor: pointer;
     width: 100%;
+
+    &_loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-direction: row;
+        background: lighten($background-default, 5) !important;
+    }
 }
 
 .size__ {

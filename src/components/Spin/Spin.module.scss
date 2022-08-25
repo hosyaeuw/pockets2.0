@@ -1,0 +1,162 @@
+$color: #5D5FEF;
+$medium-size: 32px;
+$small-size: calc($medium-size / 2);
+$large-size: calc($medium-size * 2);
+
+.loader {
+    -webkit-animation: loader-1-1 4.8s linear infinite;
+    animation: loader-1-1 4.8s linear infinite;
+
+    ::after,
+    ::before {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    span {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        -webkit-animation: loader-1-2 1.2s linear infinite;
+        animation: loader-1-2 1.2s linear infinite;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            border: 3px solid $color;
+            border-radius: 50%;
+            -webkit-animation: loader-1-3 1.2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+            animation: loader-1-3 1.2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+        }
+    }
+
+    &.size_ {
+        &small {
+            height: $small-size;
+            width: $small-size;
+
+            span {
+                height: $small-size;
+                width: $small-size;
+                clip: rect(0, $small-size, $small-size, calc($small-size / 2));
+
+                &::after {
+                    height: $small-size;
+                    width: $small-size;
+                    clip: rect(0, $small-size, $small-size, calc($small-size / 2));
+                }
+            }
+        }
+
+        &medium {
+            height: $medium-size;
+            width: $medium-size;
+
+            span {
+                height: $medium-size;
+                width: $medium-size;
+                clip: rect(0, $medium-size, $medium-size, calc($medium-size / 2));
+
+                &::after {
+                    height: $medium-size;
+                    width: $medium-size;
+                    clip: rect(0, $medium-size, $medium-size, calc($medium-size / 2));
+                }
+            }
+        }
+
+        &large {
+            height: $large-size;
+            width: $large-size;
+
+            span {
+                height: $large-size;
+                width: $large-size;
+                clip: rect(0, $large-size, $large-size, calc($large-size / 2));
+
+                &::after {
+                    height: $large-size;
+                    width: $large-size;
+                    clip: rect(0, $large-size, $large-size, calc($large-size / 2));
+                }
+            }
+        }
+    }
+}
+
+@-webkit-keyframes loader-1-1 {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes loader-1-1 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes loader-1-2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(220deg);
+    }
+}
+
+@keyframes loader-1-2 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(220deg);
+    }
+}
+
+@-webkit-keyframes loader-1-3 {
+    0% {
+        -webkit-transform: rotate(-140deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(-160deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(140deg);
+    }
+}
+
+@keyframes loader-1-3 {
+    0% {
+        transform: rotate(-140deg);
+    }
+
+    50% {
+        transform: rotate(-160deg);
+    }
+
+    100% {
+        transform: rotate(140deg);
+    }
+}

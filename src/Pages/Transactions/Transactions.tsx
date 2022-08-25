@@ -1,17 +1,20 @@
-import PageLayout from "../../components/PageLayout";
-import { Statistics } from "./components";
-import { Transactions as TransactionsBlock } from "../common/components";
+import PageLayout from '../../components/PageLayout';
+import { Transactions as TransactionsBlock } from '../common/components';
+import DateProvider from '../common/providers/DateProvider';
+import { Statistics } from './components';
 
-import styles from "./Transactions.module.scss";
+import styles from './Transactions.module.scss';
 
 const Transactions = () => {
     return (
-        <PageLayout title="Операции" prevPath="/">
-            <div className={styles.transactions}>
-                <Statistics />
-                <TransactionsBlock />
-            </div>
-        </PageLayout>
+        <DateProvider>
+            <PageLayout title="Операции" prevPath="/">
+                <div className={styles.transactions}>
+                    <Statistics />
+                    <TransactionsBlock />
+                </div>
+            </PageLayout>
+        </DateProvider>
     );
 };
 

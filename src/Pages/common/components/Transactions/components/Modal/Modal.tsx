@@ -1,5 +1,6 @@
-import * as React from "react";
-import { Controller, useForm } from "react-hook-form";
+import * as React from 'react';
+
+import { Controller, useForm } from 'react-hook-form';
 
 import {
     Button,
@@ -8,14 +9,12 @@ import {
     Tabs,
     Input,
     InputsContainer,
-} from "../../../../../../components";
-import { TCategory } from "../../../../../common/hooks/useCategories";
-import useTransactions, {
-    TransactionType,
-} from "../../../../../common/hooks/useTransactions";
-import CategoriesSelect from "../../../CategoriesSelect";
+} from '../../../../../../components';
+import { TransactionType } from '../../../../../common/hooks/useTransactions';
+import useAddTransaction from '../../../../hooks/transactions/useAddTransaction';
+import CategoriesSelect from '../../../CategoriesSelect';
 
-import styles from "./Modal.module.scss";
+import styles from './Modal.module.scss';
 
 type Props = {
     show: boolean;
@@ -30,23 +29,23 @@ type TTab = {
 
 const tabs: TTab[] = [
     {
-        title: "Доход +",
-        value: "income",
+        title: 'Доход +',
+        value: 'income',
     },
     {
-        title: "Расход -",
-        value: "expense",
+        title: 'Расход -',
+        value: 'expense',
     },
 ];
 
 type TFormData = {
     date: string;
     amount: string;
-    category?: TCategory;
+    category?: number;
 };
 
-const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
-    const { addTransaction } = useTransactions();
+const Modal: React.FC<Props> = ({ show, onClose, startTab = 'income' }) => {
+    const { addTransaction } = useAddTransaction();
 
     const {
         handleSubmit,
@@ -62,21 +61,16 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
             reset({ ...getValues(), category: undefined });
             setTab(value as TransactionType);
         },
-        [reset, getValues]
+        [reset, getValues],
     );
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
-            addTransaction({
-                ...data,
-                category: data.category,
-                amount: +data.amount,
-                type: tab,
-            });
+            addTransaction(+data.amount, data.date, data.category);
             reset();
             onClose();
         },
-        [addTransaction, tab, reset, onClose]
+        [addTransaction, reset, onClose],
     );
 
     return (
@@ -86,42 +80,35 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
             className={styles.modal}
             title="Добавить операцию"
         >
-            <form
-                onSubmit={handleSubmit(onSubmitHandler)}
-                className={styles.form}
-            >
+            <form onSubmit={handleSubmit(onSubmitHandler)} className={styles.form}>
                 <div className={styles.form__tabs}>
-                    <Tabs
-                        options={tabs}
-                        onChange={onChangeTabHandler}
-                        defaultValue={tab}
-                    />
+                    <Tabs options={tabs} onChange={onChangeTabHandler} defaultValue={tab} />
                 </div>
                 <InputsContainer>
                     <Controller
                         control={control}
                         name="date"
                         rules={{
-                            required: "Обязательное поле",
+                            required: 'Обязательное поле',
                         }}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                             <Input
-                                error={errors["date"]?.message}
                                 type="date"
                                 {...field}
+                                error={errors['date']?.message}
                                 placeholder="Дата"
                             />
                         )}
                     />
-                    {tab === "expense" && (
+                    {tab === 'expense' && (
                         <Controller
                             control={control}
                             name="category"
                             rules={{
-                                required: "Обязательное поле",
+                                required: 'Обязательное поле',
                             }}
                             render={({ field }) => (
-                                <CategoriesSelect<TFormData, "category"> field={field} />
+                                <CategoriesSelect<TFormData, 'category'> field={field} />
                             )}
                         />
                     )}
@@ -129,13 +116,13 @@ const Modal: React.FC<Props> = ({ show, onClose, startTab = "income" }) => {
                         control={control}
                         name="amount"
                         rules={{
-                            required: "Обязательное поле",
+                            required: 'Обязательное поле',
                         }}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                             <Input
                                 type="number"
                                 placeholder="Сумма"
-                                error={errors["amount"]?.message}
+                                error={errors['amount']?.message}
                                 {...field}
                             />
                         )}

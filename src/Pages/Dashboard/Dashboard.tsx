@@ -1,8 +1,8 @@
-import PageLayout from "../../components/PageLayout";
-import { Transactions } from "../common/components";
-import { Global, Goals } from "./components";
+import PageLayout from '../../components/PageLayout';
+import { Transactions } from '../common/components';
+import { Global, Goals } from './components';
 
-import styles from "./Dashboard.module.scss";
+import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
     return (

@@ -1,18 +1,26 @@
-import { useTable } from "react-table";
+import { useTable } from 'react-table';
 
-import { TableBody, TableHeader } from "./components";
-import { columns, tableData } from "./utils";
-import { Content, Text } from "../../../../../../components";
-import useTransactions from "../../../../hooks/useTransactions";
+import { Content, Spin, Text } from '../../../../../../components';
+import useFetchTransactions from '../../../../hooks/transactions/useFetchTransactions';
+import { TableBody, TableHeader } from './components';
+import { columns, tableData } from './utils';
 
-import styles from "./Table.module.scss";
-// TODO: убрать дубликат с целями
+import styles from './Table.module.scss';
+
 const Wrapper: React.FC = () => {
-    const { items } = useTransactions();
+    const { items, isLoading } = useFetchTransactions();
 
-    const data = tableData(items);
+    const tData = tableData(items);
 
-    const tableInstance = useTable<any>({ columns, data });
+    const tableInstance = useTable<any>({ columns, data: tData });
+
+    if (isLoading) {
+        return (
+            <div className={styles.table__empty}>
+                <Spin />
+            </div>
+        );
+    }
 
     if (items.length === 0) {
         return (
@@ -24,24 +32,19 @@ const Wrapper: React.FC = () => {
         );
     }
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        tableInstance;
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
     return (
         <table className={styles.table} {...getTableProps()}>
             <TableHeader headerGroups={headerGroups} />
-            <TableBody
-                getTableBodyProps={getTableBodyProps}
-                rows={rows}
-                prepareRow={prepareRow}
-            />
+            <TableBody getTableBodyProps={getTableBodyProps} rows={rows} prepareRow={prepareRow} />
         </table>
     );
 };
 
 const Table = () => {
     return (
-        <Content variant="primary" className={styles["table-container"]}>
+        <Content variant="primary" className={styles['table-container']}>
             <Wrapper />
         </Content>
     );

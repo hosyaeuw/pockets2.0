@@ -1,52 +1,34 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import categories from "./slices/categories";
-import transactions from "./slices/transactions";
-import globalTransactions from "./slices/globalTransactions";
-import goals from "./slices/goals";
-import storage from "redux-persist/lib/storage";
-import {
-    persistReducer,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
-} from "redux-persist";
+import { configureStore } from '@reduxjs/toolkit';
 
+import { categoriesApi } from '../services/categories';
+import { GoalsApi } from '../services/goals';
+import { StatisticsApi } from '../services/statistics';
+import { TransactionsApi } from '../services/transactions';
+import categories from './slices/categories';
+import globalTransactions from './slices/globalTransactions';
+import goals from './slices/goals';
+import transactions from './slices/transactions';
+// TODO: в цикле?
 const reducersObj = {
     categories,
     transactions,
     globalTransactions,
     goals,
+    [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [TransactionsApi.reducerPath]: TransactionsApi.reducer,
+    [GoalsApi.reducerPath]: GoalsApi.reducer,
+    [StatisticsApi.reducerPath]: StatisticsApi.reducer,
 };
-
-const reducers = combineReducers(reducersObj);
-
-const persistConfig = {
-    key: "@app",
-    storage,
-    whitelist: Object.keys(reducersObj),
-    version: 0,
-};
-
-const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [
-                    FLUSH,
-                    REHYDRATE,
-                    PAUSE,
-                    PERSIST,
-                    PURGE,
-                    REGISTER,
-                ],
-            },
-        }),
+    reducer: reducersObj,
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(
+            categoriesApi.middleware,
+            TransactionsApi.middleware,
+            GoalsApi.middleware,
+            StatisticsApi.middleware,
+        ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

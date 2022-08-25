@@ -1,7 +1,9 @@
-import useTransactions from "../../Pages/common/hooks/useTransactions";
-import ArrowLink from "../ArrowLink";
-import Text from "../Text";
-import styles from "./Header.module.scss";
+import useFetchBalance from '../../Pages/common/hooks/transactions/useFetchTransactionsBalance';
+import { AmountHelper } from '../../utils/amountHelper';
+import ArrowLink from '../ArrowLink';
+import Text from '../Text';
+
+import styles from './Header.module.scss';
 
 type Props = {
     title: string | React.ReactNode;
@@ -9,7 +11,7 @@ type Props = {
 };
 
 const Header: React.FC<Props> = ({ title, prevPath }) => {
-    const { freeMoney } = useTransactions();
+    const { data } = useFetchBalance();
 
     return (
         <div className={styles.header}>
@@ -18,8 +20,8 @@ const Header: React.FC<Props> = ({ title, prevPath }) => {
                 <Text size="xl">{title}</Text>
             </div>
             <div className={styles.header__right}>
-                <Text className={styles.header__amount} size="xl">
-                    <b>{freeMoney}</b>
+                <Text className={styles.header__amount} align="right" size="xl">
+                    <b>{AmountHelper.format(data.balance)}</b>
                 </Text>
                 <Text size="s" color="secondary">
                     На счету

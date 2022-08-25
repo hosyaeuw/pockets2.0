@@ -1,17 +1,13 @@
-import * as React from "react";
-import { Controller, useForm } from "react-hook-form";
-import {
-    Button,
-    Input,
-    PocketsModal,
-    Text,
-} from "../../../../../../components";
-import { CategoriesSelect } from "../../../../../common/components";
-import { TCategory } from "../../../../../common/hooks/useCategories";
-import useGoals from "../../../../../common/hooks/useGoals";
-import useTransactions from "../../../../../common/hooks/useTransactions";
+import * as React from 'react';
 
-import styles from "./Modal.module.scss";
+import { Controller, useForm } from 'react-hook-form';
+
+import { Button, Input, PocketsModal, Text } from '../../../../../../components';
+import { CategoriesSelect } from '../../../../../common/components';
+import useAddGoal from '../../../../../common/hooks/goals/useAddGoal';
+import useFetchBalance from '../../../../../common/hooks/transactions/useFetchTransactionsBalance';
+
+import styles from './Modal.module.scss';
 
 type Props = {
     show: boolean;
@@ -24,9 +20,9 @@ type TFormData = {
     initial_deposit: string;
     deposit_term: string;
     percent: string;
-    category: TCategory;
+    category: number;
 };
-// TODO: создать контроллеры через хук useController
+
 const Modal: React.FC<Props> = ({ show, onClose }) => {
     const {
         handleSubmit,
@@ -34,8 +30,10 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
         reset,
         formState: { errors },
     } = useForm<TFormData>();
-    const { addGoal } = useGoals();
-    const { freeMoney } = useTransactions();
+    const { addGoal } = useAddGoal();
+    const {
+        data: { balance },
+    } = useFetchBalance();
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
@@ -49,35 +47,26 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
             reset();
             onClose();
         },
-        [addGoal, reset, onClose]
+        [addGoal, reset, onClose],
     );
 
     return (
-        <PocketsModal
-            show={show}
-            onClose={onClose}
-            className={styles.modal}
-            title="Создание цели"
-        >
+        <PocketsModal show={show} onClose={onClose} className={styles.modal} title="Создание цели">
             <Text align="center" color="secondary">
-                Создайте цель. Разместите средства под процент.. Получайте
-                статистику по движению к цели и анализируйте выгоду от своего
-                вклада!
+                Создайте цель. Разместите средства под процент.. Получайте статистику по движению к
+                цели и анализируйте выгоду от своего вклада!
             </Text>
-            <form
-                onSubmit={handleSubmit(onSubmitHandler)}
-                className={styles.form}
-            >
+            <form onSubmit={handleSubmit(onSubmitHandler)} className={styles.form}>
                 <Controller
                     control={control}
                     name="name"
                     rules={{
-                        required: "Обязательное поле",
+                        required: 'Обязательное поле',
                     }}
-                    render={({ field }) => (
+                    render={({ field: { ref, ...field } }) => (
                         <Input
                             {...field}
-                            error={errors["name"]?.message}
+                            error={errors['name']?.message}
                             placeholder="Введите название цели"
                         />
                     )}
@@ -88,12 +77,12 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         control={control}
                         name="total_amount"
                         rules={{
-                            required: "Обязательное поле",
+                            required: 'Обязательное поле',
                         }}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                             <div className={styles.field_amount}>
                                 <Input
-                                    error={errors["total_amount"]?.message}
+                                    error={errors['total_amount']?.message}
                                     type="number"
                                     {...field}
                                     placeholder="0"
@@ -108,20 +97,20 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         control={control}
                         name="initial_deposit"
                         rules={{
-                            required: "Обязательное поле",
-                            validate: (data) => {
-                                if (+data > freeMoney) {
-                                    return "У вас нету столько денег";
+                            required: 'Обязательное поле',
+                            validate: data => {
+                                if (+data > balance) {
+                                    return 'У вас нету столько денег';
                                 }
                             },
                         }}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                             <div className={styles.field_amount}>
                                 <Input
                                     type="number"
                                     {...field}
                                     placeholder="0"
-                                    error={errors["initial_deposit"]?.message}
+                                    error={errors['initial_deposit']?.message}
                                 />
                             </div>
                         )}
@@ -133,13 +122,11 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         control={control}
                         name="category"
                         rules={{
-                            required: "Обязательное поле",
+                            required: 'Обязательное поле',
                         }}
                         render={({ field }) => (
                             <div className={styles.field_select}>
-                                <CategoriesSelect<TFormData, "category">
-                                    field={field}
-                                />
+                                <CategoriesSelect<TFormData, 'category'> field={field} />
                             </div>
                         )}
                     />
@@ -150,12 +137,12 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         control={control}
                         name="deposit_term"
                         rules={{
-                            required: "Обязательное поле",
+                            required: 'Обязательное поле',
                         }}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                             <div className={styles.field_number}>
                                 <Input
-                                    error={errors["deposit_term"]?.message}
+                                    error={errors['deposit_term']?.message}
                                     type="number"
                                     {...field}
                                     placeholder="1"
@@ -170,12 +157,12 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
                         control={control}
                         name="percent"
                         rules={{
-                            required: "Обязательное поле",
+                            required: 'Обязательное поле',
                         }}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                             <div className={styles.field_number}>
                                 <Input
-                                    error={errors["percent"]?.message}
+                                    error={errors['percent']?.message}
                                     {...field}
                                     placeholder="0%"
                                 />

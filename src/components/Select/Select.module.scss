@@ -31,6 +31,7 @@ $border: rgba(255, 255, 255, 0.15);
         overflow-y: auto;
         scrollbar-gutter: stable;
         padding: 8px 0;
+        z-index: 9999;
     }
 
     &::placeholder {

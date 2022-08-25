@@ -1,62 +1,12 @@
-import React from "react";
-import { Content, Plate, Text } from "../../../../components";
-import DateHelper from "../../../../utils/dateHelper";
-import useGoals from "../../../common/hooks/useGoals";
-import AnalyticsText from "../AnalyticsText";
+import { Content, Plate, Text } from '../../../../components';
+import { AmountHelper } from '../../../../utils/amountHelper';
+import useFetchAnalytics from '../../../common/hooks/goals/useFetchAnalyticsGoals';
+import AnalyticsText from '../AnalyticsText';
 
-import styles from "./Analytics.module.scss";
+import styles from './Analytics.module.scss';
 
-const getPercent = (totalAmount: number, amount: number) => {
-    return Math.ceil((amount / totalAmount) * 100);
-};
-
-const currDate = new Date();
 const Analytics = () => {
-    const { items } = useGoals();
-
-    const sortedByImmediate = React.useMemo(
-        () =>
-            [...items].sort(
-                (a, b) =>
-                    DateHelper.getDateDifferenceDays(
-                        currDate,
-                        new Date(b.want_close)
-                    ) -
-                    DateHelper.getDateDifferenceDays(
-                        currDate,
-                        new Date(a.want_close)
-                    )
-            ),
-        [items]
-    );
-
-    const sortedByPercent = React.useMemo(
-        () =>
-            [...items].sort(
-                (a, b) =>
-                    getPercent(b.total_amount, b.amount) -
-                    getPercent(a.total_amount, b.amount)
-            ),
-        [items]
-    );
-
-    const sortedByReplenishmentCount = React.useMemo(
-        () =>
-            [...items].sort(
-                (a, b) => b.replenishmentCount - a.replenishmentCount
-            ),
-        [items]
-    );
-
-    const sumTotalAmountGoals = React.useMemo(
-        () => items.reduce((acc, curr) => acc + curr.total_amount, 0),
-        [items]
-    );
-
-    const sumCurrentAmountGoals = React.useMemo(
-        () => items.reduce((acc, curr) => acc + curr.amount, 0),
-        [items]
-    );
+    const { data } = useFetchAnalytics();
 
     return (
         <Content className={styles.analytics}>
@@ -66,33 +16,30 @@ const Analytics = () => {
             <div className={styles.analytics__plates}>
                 <Plate
                     title="Цели"
-                    rightComponent={<Text size="l">{sumTotalAmountGoals}</Text>}
+                    rightComponent={
+                        <Text size="l">{AmountHelper.format(data.open_goal_total)}</Text>
+                    }
                 />
                 <Plate
                     title="Средств на целях"
                     rightComponent={
-                        <Text size="l">{sumCurrentAmountGoals}</Text>
+                        <Text size="l">{AmountHelper.format(data.open_goal_amount)}</Text>
                     }
                 />
             </div>
             <div className={styles.analytics__text_top}>
                 <AnalyticsText title="Всего доход от %" value={0} />
                 <AnalyticsText title="В этом месяце доход от %" value={0} />
-                <AnalyticsText
-                    title="Ближайшая цель (дней)"
-                    value={
-                        sortedByImmediate[sortedByImmediate.length - 1]?.name
-                    }
-                />
+                <AnalyticsText title="Ближайшая цель (дней)" value={data.nearest_end_goal_days} />
             </div>
             <div className={styles.analytics__text_bottom}>
                 <AnalyticsText
                     title="Самая успешная категория"
-                    value={sortedByPercent[0]?.name}
+                    value={data.most_successful_category?.name}
                 />
                 <AnalyticsText
                     title="Самая популярная категория"
-                    value={sortedByReplenishmentCount[0]?.name}
+                    value={data.post_popular_category?.name}
                 />
             </div>
         </Content>

@@ -1,14 +1,11 @@
-import * as React from "react";
-import { Controller, useForm } from "react-hook-form";
-import {
-    Button,
-    Input,
-    PocketsModal,
-    Text,
-} from "../../../../../../../../components";
-import useCategories from "../../../../../../../common/hooks/useCategories";
+import * as React from 'react';
 
-import styles from "./Modal.module.scss";
+import { Controller, useForm } from 'react-hook-form';
+
+import { Button, Input, PocketsModal, Text } from '../../../../../../../../components';
+import useAddCategory from '../../../../../../../common/hooks/categories/useAddCategory';
+
+import styles from './Modal.module.scss';
 
 type Props = {
     show: boolean;
@@ -20,7 +17,8 @@ type TFormData = {
 };
 
 const Modal: React.FC<Props> = ({ show, onClose }) => {
-    const { addCategory } = useCategories();
+    const { addCategory } = useAddCategory();
+
     const {
         handleSubmit,
         control,
@@ -30,11 +28,12 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
 
     const onSubmitHandler = React.useCallback(
         (data: TFormData) => {
-            addCategory(data.category_name);
-            reset();
-            onClose();
+            addCategory(data.category_name).then(() => {
+                reset();
+                onClose();
+            });
         },
-        [addCategory, onClose, reset]
+        [addCategory, onClose, reset],
     );
 
     return (
@@ -44,21 +43,18 @@ const Modal: React.FC<Props> = ({ show, onClose }) => {
             className={styles.modal}
             title="Добавить категорию"
         >
-            <form
-                onSubmit={handleSubmit(onSubmitHandler)}
-                className={styles.form}
-            >
+            <form onSubmit={handleSubmit(onSubmitHandler)} className={styles.form}>
                 <Controller
                     control={control}
                     name="category_name"
                     rules={{
-                        required: "Обязательное поле",
+                        required: 'Обязательное поле',
                     }}
-                    render={({ field }) => (
+                    render={({ field: { ref, ...field } }) => (
                         <Input
                             {...field}
                             placeholder="Введите название категории"
-                            error={errors["category_name"]?.message}
+                            error={errors['category_name']?.message}
                         />
                     )}
                 />

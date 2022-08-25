@@ -1,8 +1,10 @@
-import * as React from "react";
-import classNames from "classnames";
-import { Button, Text } from "../";
+import * as React from 'react';
 
-import styles from "./Tabs.module.scss";
+import classNames from 'classnames';
+
+import { Button, Text } from '../';
+
+import styles from './Tabs.module.scss';
 
 type Option = {
     title: string;
@@ -26,9 +28,9 @@ const Tab: React.FC<TabProps> = ({ option, onClick, selected, className }) => {
             className={classNames(styles.tab, className)}
             onClick={onClickHandler}
             size="s"
-            variant={selected ? "default" : "secondary"}
+            variant={selected ? 'default' : 'secondary'}
         >
-            <Text color={selected ? "default" : "primary"}>
+            <Text color={selected ? 'default' : 'primary'}>
                 <b>{option.title}</b>
             </Text>
         </Button>
@@ -43,7 +45,7 @@ type Props = {
 
 const Tabs: React.FC<Props> = ({ options, onChange, defaultValue }) => {
     const [selectedOptionValue, setSelectedOptionValue] = React.useState(
-        defaultValue || options[0].value
+        defaultValue || options[0].value,
     );
 
     const onClickHandler = React.useCallback(
@@ -51,13 +53,14 @@ const Tabs: React.FC<Props> = ({ options, onChange, defaultValue }) => {
             onChange(value);
             setSelectedOptionValue(value);
         },
-        [onChange]
+        [onChange],
     );
 
     return (
         <div className={styles.tabs}>
             {options.map((option, index) => (
                 <Tab
+                    key={option.value}
                     className={classNames({
                         [styles.tab_first]: index === 0,
                         [styles.tab_last]: index === options.length - 1,

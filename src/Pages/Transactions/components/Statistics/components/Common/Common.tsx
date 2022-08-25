@@ -1,16 +1,19 @@
-import * as React from "react";
-import { Text } from "../../../../../../components";
-import { GlobalPlates } from "../../../../../common/components";
-import useCategories from "../../../../../common/hooks/useCategories";
-import Graph from "../Graph";
+import * as React from 'react';
 
-import styles from "./Common.module.scss";
+import { Text } from '../../../../../../components';
+import { GlobalPlates } from '../../../../../common/components';
+import useFetchCategories from '../../../../../common/hooks/categories/useFetchCategories';
+import useFetchGlobal from '../../../../../common/hooks/transactions/useFetchTransactionsGlobal';
+import Graph from '../Graph';
+
+import styles from './Common.module.scss';
 
 const Common = () => {
-    const { items: categoryItems } = useCategories();
+    const { items: categoryItems } = useFetchCategories();
+    const { data } = useFetchGlobal();
 
     const items = React.useMemo(() => {
-        return categoryItems.map((category) => ({
+        return categoryItems.map(category => ({
             label: category.name,
             value: category.amount,
         }));
@@ -24,7 +27,7 @@ const Common = () => {
                         Расходы по категориям
                     </Text>
                 </div>
-                <GlobalPlates />
+                <GlobalPlates data={data} />
             </div>
             <div className={styles.common__graph}>
                 <Graph items={items} />

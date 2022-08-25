@@ -1,10 +1,12 @@
-import * as React from "react";
-import { EllipsisIcon } from "../../../../../../assets";
-import { Button, Text } from "../../../../../../components";
-import useGoals, { TGoal } from "../../../../../common/hooks/useGoals";
-import useModal from "../../../../../common/hooks/useModal";
+import * as React from 'react';
 
-import styles from "./GoalCardButton.module.scss";
+import { EllipsisIcon } from '../../../../../../assets';
+import { Button, Text } from '../../../../../../components';
+import useDeleteGoal from '../../../../../common/hooks/goals/useDeleteGoal';
+import { TGoal } from '../../../../../common/hooks/useGoals';
+import useModal from '../../../../../common/hooks/useModal';
+
+import styles from './GoalCardButton.module.scss';
 
 type Props = {
     item: TGoal;
@@ -24,7 +26,7 @@ const Popup: React.FC<{ onClick: () => void }> = ({ onClick }) => {
 };
 
 const GoalCardButton: React.FC<Props> = ({ item }) => {
-    const { deleteGoal } = useGoals();
+    const { deleteGoal } = useDeleteGoal();
     const { showModal, toggleShowModalHandler } = useModal();
 
     const onDeleteHandler = React.useCallback(() => {
@@ -33,7 +35,7 @@ const GoalCardButton: React.FC<Props> = ({ item }) => {
     }, [item.id, deleteGoal, toggleShowModalHandler]);
 
     return (
-        <div className={styles["button-container"]}>
+        <div className={styles['button-container']}>
             <Button variant="ghost" onClick={toggleShowModalHandler}>
                 <div className={styles.button}>
                     <EllipsisIcon />

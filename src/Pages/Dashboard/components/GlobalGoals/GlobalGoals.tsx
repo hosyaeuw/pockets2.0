@@ -1,23 +1,18 @@
-import * as React from "react";
-import { Text } from "../../../../components";
-import useGoals from "../../../common/hooks/useGoals";
+import { Text } from '../../../../components';
+import { AmountHelper } from '../../../../utils/amountHelper';
+import useFetchAnalytics from '../../../common/hooks/goals/useFetchAnalyticsGoals';
 
-import styles from "./GlobalGoals.module.scss";
+import styles from './GlobalGoals.module.scss';
 
 const GlobalGoals = () => {
-    const { items } = useGoals();
-
-    const totalSum = React.useMemo(
-        () => items.reduce((acc, curr) => acc + +curr.amount, 0),
-        [items]
-    );
+    const { data } = useFetchAnalytics();
 
     return (
-        <div className={styles["global-goals"]}>
+        <div className={styles['global-goals']}>
             <Text size="s" color="secondary">
                 Отложенно на цели
             </Text>
-            <Text size="s">{totalSum}</Text>
+            <Text size="s">{AmountHelper.format(data.open_goal_amount)}</Text>
         </div>
     );
 };

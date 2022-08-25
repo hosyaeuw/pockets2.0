@@ -1,29 +1,39 @@
-import { useTable } from "react-table";
+import { useTable } from 'react-table';
 
-import { Button, Content, Text } from "../../../../../../../../components";
-import Modal from "../Modal";
-import { TableBody, TableHeader } from "./components";
+import { Button, Content, Spin, Text } from '../../../../../../../../components';
+import useFetchCategories from '../../../../../../../common/hooks/categories/useFetchCategories';
+import useModal from '../../../../../../../common/hooks/useModal';
+import Modal from '../Modal';
+import { TableBody, TableHeader } from './components';
 
-import { columns, tableData } from "./utils";
+import { columns, tableData } from './utils';
 
-import styles from "./Table.module.scss";
-import useCategories from "../../../../../../../common/hooks/useCategories";
-import useModal from "../../../../../../../common/hooks/useModal";
+import styles from './Table.module.scss';
 
 type Props = {
     openModal: () => void;
 };
 
 const Wrapper: React.FC<Props> = ({ openModal }) => {
-    const { items } = useCategories();
+    const { items, isLoading } = useFetchCategories();
 
-    const data = tableData(items);
+    const tData = tableData(items);
 
-    const tableInstance = useTable<any>({ columns, data });
+    const tableInstance = useTable<any>({ columns, data: tData });
+
+    if (isLoading) {
+        return (
+            <div className={styles['empty-container']}>
+                <div className={styles.empty}>
+                    <Spin />
+                </div>
+            </div>
+        );
+    }
 
     if (items.length === 0) {
         return (
-            <div className={styles["empty-container"]}>
+            <div className={styles['empty-container']}>
                 <div className={styles.empty}>
                     <Text color="secondary">У вас нет ни одной категории</Text>
                     <Button onClick={openModal}>
@@ -34,8 +44,7 @@ const Wrapper: React.FC<Props> = ({ openModal }) => {
         );
     }
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        tableInstance;
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
     return (
         <>
@@ -47,19 +56,15 @@ const Wrapper: React.FC<Props> = ({ openModal }) => {
                     prepareRow={prepareRow}
                 />
             </table>
-            <div className={styles["table__btn-container"]}>
-                <Button
-                    variant="ghost"
-                    className={styles["table__btn"]}
-                    onClick={openModal}
-                >
-                    <Text color="primary" className={styles["table__btn-text"]}>
+            <div className={styles['table__btn-container']}>
+                <Button variant="ghost" className={styles['table__btn']} onClick={openModal}>
+                    <Text color="primary" className={styles['table__btn-text']}>
                         Добавить категорию
                         <Text
                             size="l"
                             color="primary"
                             align="center"
-                            className={styles["table__btn-plus"]}
+                            className={styles['table__btn-plus']}
                         >
                             +
                         </Text>
@@ -74,7 +79,7 @@ const Table = () => {
     const { showModal, toggleShowModalHandler } = useModal();
 
     return (
-        <Content variant="primary" className={styles["table-container"]}>
+        <Content variant="primary" className={styles['table-container']}>
             <Modal onClose={toggleShowModalHandler} show={showModal} />
             <Wrapper openModal={toggleShowModalHandler} />
         </Content>

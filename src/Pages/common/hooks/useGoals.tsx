@@ -1,13 +1,15 @@
-import * as React from "react";
-import { useDispatch } from "react-redux";
-import { useTypesSelector } from "../../../hooks/useTypesSelector";
+import * as React from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { useTypesSelector } from '../../../hooks/useTypesSelector';
 import {
     addGoalsAction,
     deleteGoalsAction,
     incrementGoalAction,
-} from "../../../redux/slices/goals";
-import DateHelper from "../../../utils/dateHelper";
-import { TCategory } from "./useCategories";
+} from '../../../redux/slices/goals';
+import DateHelper from '../../../utils/DateHelper';
+import { TCategory } from './useCategories';
 
 export type TGoal = {
     id: number;
@@ -23,7 +25,25 @@ export type TGoal = {
     want_close: string;
     closed_at: string | null;
     category: TCategory;
-    replenishmentCount: number; 
+    replenishmentCount: number;
+};
+
+export type TGoalTop = {
+    id: number;
+    name: string;
+    total_amount: number;
+    amount: number;
+    progress: number;
+};
+
+export type TGoalAnalytics = {
+    open_goal_amount: number;
+    open_goal_total: number;
+    current_month_percent: number;
+    all_time_percent: number;
+    nearest_end_goal_days: number;
+    most_successful_category: TCategory | undefined;
+    post_popular_category: TCategory | undefined;
 };
 
 const useGoals = () => {
@@ -41,9 +61,7 @@ const useGoals = () => {
         }) => {
             const currDate = new Date();
             const wantClose = new Date(
-                new Date(currDate).setMonth(
-                    currDate.getMonth() + data.deposit_term
-                )
+                new Date(currDate).setMonth(currDate.getMonth() + data.deposit_term),
             );
 
             dispatch(
@@ -57,26 +75,26 @@ const useGoals = () => {
                     created_at: DateHelper.formatDateToStr(currDate),
                     closed_at: null,
                     replenishmentCount: 0,
-                })
+                }),
             );
         },
-        [items, dispatch]
+        [items, dispatch],
     );
 
     const incrementGoal = React.useCallback(
         (data: { id: number; amount: number }) => {
             dispatch(incrementGoalAction(data));
         },
-        [dispatch]
+        [dispatch],
     );
 
     const deleteGoal = React.useCallback(
         (id: number) => {
-            if (window.confirm("Вы точно хотите удалить эту цель?")) {
+            if (window.confirm('Вы точно хотите удалить эту цель?')) {
                 dispatch(deleteGoalsAction(id));
             }
         },
-        [dispatch]
+        [dispatch],
     );
 
     return { addGoal, items, incrementGoal, deleteGoal };

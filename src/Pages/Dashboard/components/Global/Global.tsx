@@ -1,11 +1,14 @@
-import { Content, Text } from "../../../../components";
-import { GlobalPlates } from "../../../common/components";
-import GlobalGoals from "../GlobalGoals";
-import MoreExtends from "../MoreExtends";
+import { Content, Text } from '../../../../components';
+import { GlobalPlates } from '../../../common/components';
+import useFetchMonthlyTransaction from '../../../common/hooks/statistics/useFetchMonthlyTransaction';
+import GlobalGoals from '../GlobalGoals';
+import MoreExtends from '../MoreExtends';
 
-import styles from "./Global.module.scss";
+import styles from './Global.module.scss';
 
 const Global = () => {
+    const { data } = useFetchMonthlyTransaction();
+
     return (
         <Content
             className={styles.global}
@@ -22,7 +25,12 @@ const Global = () => {
             }
         >
             <div className={styles.global__plates}>
-                <GlobalPlates />
+                <GlobalPlates
+                    data={{
+                        income: data.total_income,
+                        expense: data.total_expense,
+                    }}
+                />
             </div>
             <div className={styles.global__info}>
                 <GlobalGoals />
